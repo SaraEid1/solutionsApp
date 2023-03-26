@@ -28,7 +28,7 @@ function Signin() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-         navigation.replace("HomeScreen");
+         navigation.replace("Home");
       }
     });
   }, []);

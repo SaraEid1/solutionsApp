@@ -5,31 +5,59 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/Homescreen";
 import Signin from "./screens/Signin";
-//import { Icon } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import BottomNavigator from "./components/Bottomnavigator";
+
 const Stack = createNativeStackNavigator();
 
-
-export default function App() {
+function HeaderTitle({ navigation }) {
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Signin"
-            component={Signin}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          
-        </Stack.Navigator>
-      </NavigationContainer>
+    <View
+      style={{
+        flexDirection: "row",
+        marginRight: 15,
+        backgroundColor: "black",
+        marginTop: 10,
+        padding: 10,
+      }}
+    >
+      <View
+        style={{
+          justifyContent: "center",
+          borderRadius: 100,
+          backgroundColor: "#333333",
+          padding: 10,
+        }}
+      >
+        <MaterialCommunityIcons
+          name="home"
+          size={30}
+          color="#ffffff"
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+    </View>
   );
 }
 
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Signin"
+          component={Signin}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={BottomNavigator}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -39,3 +67,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
