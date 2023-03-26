@@ -15,6 +15,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { signInWithCredential } from "firebase/auth";
@@ -51,15 +52,16 @@ function Signin() {
       .catch((error) => alert(error.message));
   };
 
-  const handleGoogleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithCredential(auth, provider)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Logged in with:", user.email);
-      })
-      .catch((error) => alert(error.message));
-  };
+const handleGoogleSignIn = () => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const user = result.user;
+      console.log("Logged in with:", user.email);
+    })
+    .catch((error) => alert(error.message));
+};
 
   return (
     <KeyboardAvoidingView
