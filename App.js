@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-//import BottomNavigator from "./components/BottomNavigator";
+import HomeScreen from "./screens/Homescreen";
 import Signin from "./screens/Signin";
 //import { Icon } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -17,6 +17,11 @@ export default function App() {
           <Stack.Screen
             name="Signin"
             component={Signin}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
             options={{ headerShown: false }}
           />
           
