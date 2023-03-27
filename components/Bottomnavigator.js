@@ -2,7 +2,7 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import Feed from "../screens/Feed";
-import Map from "../screens/Map";
+import MapView from "../screens/Map";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 //import TopNavigator from "./TopNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -43,8 +43,8 @@ const BottomNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="Map"
-          component={Map}
+          name="MapView"
+          component={MapView}
           options={{
             tabBarLabel: "Map",
             tabBarIcon: ({ color }) => (
