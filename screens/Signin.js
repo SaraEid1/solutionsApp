@@ -52,16 +52,17 @@ function Signin() {
       .catch((error) => alert(error.message));
   };
 
-const handleGoogleSignIn = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const user = result.user;
-      console.log("Logged in with:", user.email);
-    })
-    .catch((error) => alert(error.message));
-};
+  const handleGoogleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(auth, provider)
+      .then(() => {
+        // This code will execute after the user signs in successfully
+        // No need to extract credentials or user object here
+        console.log("Logged in successfully");
+      })
+      .catch((error) => alert(error.message));
+  };
+  
 
   return (
     <KeyboardAvoidingView

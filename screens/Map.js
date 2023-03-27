@@ -1,19 +1,13 @@
-import { View, Text, StyleSheet, Dimensions, Platform } from "react-native";
-import React, { useState, useEffect } from "react";
-import { Icon } from "react-native-elements";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import { SafeAreaView } from "react-native-safe-area-context";
-import BottomNavigator from "../components/Bottomnavigator";
-import { API_KEY } from "@env";
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native';
+import { WebView } from 'react-native-webview';
+import { API_KEY } from '@env';
 
 const Map = () => {
-  const { width, height } = Dimensions.get('window');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
-    // Get the user's current location
     navigator.geolocation.getCurrentPosition(
       position => {
         setLatitude(position.coords.latitude);
@@ -25,31 +19,17 @@ const Map = () => {
     );
   }, []);
 
-  if (Platform.OS === 'web') {
-    // Render Map component for web
-    return <MapComponent latitude={latitude} longitude={longitude} apiKey={API_KEY} />;
-  }
-
-  // Render WebView for mobile platforms
-  const uri = `https://maps.google.com/maps?q=${latitude},${longitude}&t=&z=15&output=embed&key=${API_KEY}`;
+  const uri = `https://www.google.com/maps/embed/v1/view?key=${API_KEY}&center=${latitude},${longitude}&zoom=15`;
 
   return (
     <View style={styles.container}>
       {latitude && longitude ? (
-        <WebView
-          source={{ uri }}
-          style={{ width, height }}
-        />
+        <WebView source={{ uri }} style={{ width: '100%', height: '100%' }} />
       ) : (
         <Text>Loading...</Text>
       )}
     </View>
   );
-};
-
-const MapComponent = ({ latitude, longitude, apiKey }) => {
-  // Implement Map component for web
-  return <div>{`Map Component for ${latitude},${longitude} using API key: ${apiKey}`}</div>;
 };
 
 const styles = StyleSheet.create({
