@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/Homescreen";
+import HomeScreen from "./screens/HomeScreen";
 import Signin from "./screens/Signin";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomNavigator from "./components/Bottomnavigator";
