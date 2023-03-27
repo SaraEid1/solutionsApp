@@ -35,7 +35,7 @@ const BottomNavigator = () => {
             tabBarLabel: "Feed",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="plus-circle-outline"
+                name="post"
                 color={color}
                 size={26}
               />
@@ -49,7 +49,7 @@ const BottomNavigator = () => {
             tabBarLabel: "Map",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="format-list-checks"
+                name="map-search"
                 color={color}
                 size={26}
               />
