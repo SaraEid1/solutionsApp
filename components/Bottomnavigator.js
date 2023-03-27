@@ -1,6 +1,6 @@
 import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/Homescreen";
 import Feed from "../screens/Feed";
 import Map from "../screens/Map";
 import { MaterialCommunityIcons } from "@expo/vector-icons";

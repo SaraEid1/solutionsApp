@@ -17,8 +17,14 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-import { signInWithCredential } from "firebase/auth";
+import { GoogleAuthProvider } from '@react-native-firebase/auth';
+import { getAuth, signInWithRedirect, getRedirectResult } from '@react-native-firebase/auth';
+
+//import * as WebBrowser from "expo-web-browser";
+//import * as Google from "expo-auth-session/providers/google";
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
+WebBrowser.maybeCompleteAuthSession();
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -29,7 +35,7 @@ function Signin() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-         navigation.replace("Home");
+        navigation.replace("Home");
       }
     });
   }, []);
@@ -52,16 +58,66 @@ function Signin() {
       .catch((error) => alert(error.message));
   };
 
-const handleGoogleSignIn = () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const user = result.user;
-      console.log("Logged in with:", user.email);
-    })
-    .catch((error) => alert(error.message));
-};
+
+
+  const [accessToken, setAccessToken] = React.useState();
+  const [userInfo, setUserInfo] = React.useState();
+  const [message, setMessage] = React.useState();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+    expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com"
+  });
+
+  React.useEffect(() => {
+    setMessage(JSON.stringify(response));
+    if (response?.type === "success") {
+      setAccessToken(response.authentication.accessToken);
+    }
+  }, [response]);
+
+  async function getUserData() {
+    let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+
+    userInfoResponse.json().then(data => {
+      setUserInfo(data);
+    });
+  }
+
+  function showUserInfo() {
+    if (userInfo) {
+      return (
+        <View style={styles.userInfo}>
+          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
+          <Text>Welcome {userInfo.name}</Text>
+          <Text>{userInfo.email}</Text>
+        </View>
+      );
+    }
+  }
+
+  /*
+  
+    const handleGoogleSignIn = async () => {
+      try {
+        await GoogleSignin.configure({
+          webClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+          offlineAccess: true,
+          forceCodeForRefreshToken: true,
+        });
+    
+        const { idToken } = await GoogleSignin.signIn();
+        const googleCredential = GoogleAuthProvider.credential(idToken);
+        const userCredential = await auth.signInWithCredential(googleCredential);
+        const user = userCredential.user;
+        console.log("Logged in with:", user.email);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    */
 
   return (
     <KeyboardAvoidingView
@@ -98,12 +154,13 @@ const handleGoogleSignIn = () => {
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
-
+       
         <TouchableOpacity
-          onPress={handleGoogleSignIn}
+          // onPress={handleGoogleSignIn}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Sign in with Google</Text>
+          <Text style={styles.buttonOutlineText}
+            onPress={accessToken ? getUserData : () => { promptAsync({ useProxy: false, showInRecents: true }) }}>Sign in with Google</Text>
         </TouchableOpacity>
 
       </View>
