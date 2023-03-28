@@ -58,15 +58,14 @@ function Signin() {
       .catch((error) => alert(error.message));
   };
 
-
-
   const [accessToken, setAccessToken] = React.useState();
   const [userInfo, setUserInfo] = React.useState();
   const [message, setMessage] = React.useState();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
-    expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com"
+    expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp"
   });
 
   React.useEffect(() => {
