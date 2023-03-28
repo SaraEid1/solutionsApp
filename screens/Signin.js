@@ -61,14 +61,7 @@ function Signin() {
   const [accessToken, setAccessToken] = React.useState();
   const [userInfo, setUserInfo] = React.useState();
   const [message, setMessage] = React.useState();
-/*
-  const [request, response, promptAsync] = Google.useAuthRequest({
-   // androidClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
-    expoClientId: "140130769187-2r5p7u5g4c8s26jt42e0p1j2b342bs6h.apps.googleusercontent.com",
-    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp",
-    
-  });*/
-  
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "140130769187-c96husl24318t9fgvj6j3mccl4103gpq.apps.googleusercontent.com",
     expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
@@ -114,27 +107,6 @@ function Signin() {
       );
     }
   }
-
-  /*
-  
-    const handleGoogleSignIn = async () => {
-      try {
-        await GoogleSignin.configure({
-          webClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
-          offlineAccess: true,
-          forceCodeForRefreshToken: true,
-        });
-    
-        const { idToken } = await GoogleSignin.signIn();
-        const googleCredential = GoogleAuthProvider.credential(idToken);
-        const userCredential = await auth.signInWithCredential(googleCredential);
-        const user = userCredential.user;
-        console.log("Logged in with:", user.email);
-      } catch (error) {
-        alert(error.message);
-      }
-    };
-    */
 
   return (
     <KeyboardAvoidingView
