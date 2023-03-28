@@ -61,17 +61,32 @@ function Signin() {
   const [accessToken, setAccessToken] = React.useState();
   const [userInfo, setUserInfo] = React.useState();
   const [message, setMessage] = React.useState();
-
+/*
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+   // androidClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+    expoClientId: "140130769187-2r5p7u5g4c8s26jt42e0p1j2b342bs6h.apps.googleusercontent.com",
+    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp",
+    
+  });*/
+  
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "140130769187-c96husl24318t9fgvj6j3mccl4103gpq.apps.googleusercontent.com",
     expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
-    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp"
-  });
+    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp",
+  /*  responseType: "code",
+    shouldAutoExchangeCode: false,
+    extraParams: {
+      access_type: "offline"
+    },
+    prompt: 'consent'*/
+  })
 
   React.useEffect(() => {
     setMessage(JSON.stringify(response));
     if (response?.type === "success") {
       setAccessToken(response.authentication.accessToken);
+      console.log ("Sign in success");
+      navigation.navigate("Home");
     }
   }, [response]);
 
@@ -83,13 +98,16 @@ function Signin() {
     userInfoResponse.json().then(data => {
       setUserInfo(data);
     });
+    if (userInfo) {
+      console.log (userInfo.name)
+      
+      }
   }
 
   function showUserInfo() {
     if (userInfo) {
       return (
         <View style={styles.userInfo}>
-          <Image source={{ uri: userInfo.picture }} style={styles.profilePic} />
           <Text>Welcome {userInfo.name}</Text>
           <Text>{userInfo.email}</Text>
         </View>
@@ -155,11 +173,10 @@ function Signin() {
         </TouchableOpacity>
        
         <TouchableOpacity
-          // onPress={handleGoogleSignIn}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}
-            onPress={accessToken ? getUserData : () => { promptAsync({ useProxy: false, showInRecents: true }) }}>Sign in with Google</Text>
+            onPress={accessToken ? getUserData : () => { promptAsync({showInRecents: true }) }}>Sign in with Google</Text>
         </TouchableOpacity>
 
       </View>

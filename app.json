@@ -20,9 +20,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "package": "com.myexpoapp.solutionsapp"
-      }
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.myexpoapp.solutionsapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
