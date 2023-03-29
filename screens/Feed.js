@@ -31,6 +31,7 @@ export default function Feed() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
   const [newComment, setNewComment] = useState("");
+  // const [newLocation, setNewLocation] = useState("")
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {

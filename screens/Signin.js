@@ -65,20 +65,20 @@ function Signin() {
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "140130769187-c96husl24318t9fgvj6j3mccl4103gpq.apps.googleusercontent.com",
     expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
-    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp",
-  /*  responseType: "code",
-    shouldAutoExchangeCode: false,
-    extraParams: {
-      access_type: "offline"
-    },
-    prompt: 'consent'*/
+    // redirectUri: "https://auth.expo.io/@k-jelly/solutionsApp",
+    // responseType: "code",
+    // shouldAutoExchangeCode: false,
+    // extraParams: {
+    //   access_type: "offline"
+    // },
+    // prompt: 'consent'
   })
 
   React.useEffect(() => {
     setMessage(JSON.stringify(response));
     if (response?.type === "success") {
       setAccessToken(response.authentication.accessToken);
-      console.log ("Sign in success");
+      console.log("Sign in success");
       navigation.navigate("Home");
     }
   }, [response]);
@@ -92,9 +92,9 @@ function Signin() {
       setUserInfo(data);
     });
     if (userInfo) {
-      console.log (userInfo.name)
-      
-      }
+      console.log(userInfo.name)
+
+    }
   }
 
   function showUserInfo() {
@@ -143,12 +143,12 @@ function Signin() {
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
-       
+
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}
-            onPress={accessToken ? getUserData : () => { promptAsync({showInRecents: true }) }}>Sign in with Google</Text>
+            onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}>Sign in with Google</Text>
         </TouchableOpacity>
 
       </View>
