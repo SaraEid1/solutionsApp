@@ -22,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.myexpoapp.solutionsapp"
+      "package": "com.myexpoapp.solutionsapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f63ea094-ce88-43e4-a9a4-23ea7c9eac05"
+      }
     }
   }
 }

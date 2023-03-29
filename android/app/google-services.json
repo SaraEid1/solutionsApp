@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "140130769187",
+    "project_id": "solutionsapp-55198",
+    "storage_bucket": "solutionsapp-55198.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140130769187:android:407fd63f89f26495df1496",
+        "android_client_info": {
+          "package_name": "com.myexpoapp.solutionsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140130769187-siihvqs3bbbmrs3upnejlg21h7c4ehou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myexpoapp.solutionsapp",
+            "certificate_hash": "c27ad6901d54fb93feae6096d7b7ae426a429197"
+          }
+        },
+        {
+          "client_id": "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAreQoZx16GKIVR_ryKwMAffY24N91jhms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
