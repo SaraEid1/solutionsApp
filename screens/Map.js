@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import firebase from '../firebase';
+// import firebase from '../firebase';
 import {
-  getFirestore,
+  // getFirestore,
   collection,
   onSnapshot,
-  addDoc,
-  doc,
-  updateDoc,
-  arrayUnion,
+  // addDoc,
+  // doc,
+  // updateDoc,
+  // arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -128,7 +128,7 @@ export default function Maps() {
       {location ? (
         <MapView
           style={styles.map}
-          initialRegion={coordinates.length > 0 ? initialRegion : null}
+          // initialRegion={coordinates.length > 0 ? initialRegion : null}
         >
           {location && (
             <Marker
@@ -140,7 +140,7 @@ export default function Maps() {
             />
           )}
 
-          {coordinates && coordinates.length > 0 && coordinates.map((post, index) => (
+          {/* {coordinates && coordinates.length > 0 && coordinates.map((post, index) => (
 
             <Marker
               key={index}
@@ -150,10 +150,10 @@ export default function Maps() {
               }}
               title={post.title}
             />
-          )
+          ) */}
 
 
-          )}
+          {/* )} */}
 
         </MapView>
       ) : (<Text>No Location data available</Text>)}
