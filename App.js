@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,8 +7,14 @@ import HomeScreen from "./screens/Homescreen";
 import Signin from "./screens/Signin";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomNavigator from "./components/Bottomnavigator";
+import { Platform } from 'react-native';
+//import * as Notifications from 'expo-notifications';
+import { useEffect } from 'react';
+import messaging from '@react-native-firebase/messaging';
 
 const Stack = createNativeStackNavigator();
+
+
 
 function HeaderTitle({ navigation }) {
   return (
@@ -41,6 +47,67 @@ function HeaderTitle({ navigation }) {
 }
 
 export default function App() {
+
+
+  /*
+const requestUserPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
+}
+
+
+  useEffect (() => {
+    if (requestUserPermission()){
+      messaging().getToken().then (token => {
+        console.log (token);
+      })
+    }
+    else {
+      console.log ("Failed token status", authStatus)
+    }
+
+ // Check whether an initial notification is available
+ messaging()
+ .getInitialNotification()
+ .then(async (remoteMessage) => {
+   if (remoteMessage) {
+     console.log(
+       'Notification caused app to open from quit state:',
+       remoteMessage.notification,
+     );
+   }
+ });
+
+ // Assume a message-notification contains a "type" property in the data payload of the screen to open
+
+ messaging().onNotificationOpenedApp(async (remoteMessage) => {
+  console.log(
+    'Notification caused app to open from background state:',
+    remoteMessage.notification,
+  );
+});
+
+// Register background handler
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
+});
+
+const unsubscribe = messaging().onMessage(async remoteMessage => {
+  Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+});
+
+return unsubscribe;
+
+
+}, []);
+*/
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

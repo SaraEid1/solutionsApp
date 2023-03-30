@@ -3,6 +3,8 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import HomeScreen from "../screens/Homescreen";
 import Feed from "../screens/Feed";
 import Map from "../screens/Map";
+import Addpost from "../screens/Addpost";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 //import TopNavigator from "./TopNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -50,6 +52,21 @@ const BottomNavigator = () => {
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
                 name="map-search"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+
+<Tab.Screen
+          name="Addpost"
+          component={Addpost}
+          options={{
+            tabBarLabel: "Addpost",
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons
+                name="note-plus-outline"
                 color={color}
                 size={26}
               />

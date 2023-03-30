@@ -19,13 +19,12 @@ import {
   doc,
   updateDoc,
   arrayUnion,
-
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Timestamp } from "firebase/firestore";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import Markers from "../components/DisplayPostLocation";
+import tw from "tailwind-react-native-classnames";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -33,6 +32,7 @@ export default function Feed() {
   const [newPostBody, setNewPostBody] = useState("");
   const [newComment, setNewComment] = useState("");
   const [location, setLocation] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
@@ -93,141 +93,45 @@ export default function Feed() {
       });
   }
 
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <SafeAreaProvider>
-      {/* <ScrollView> */}
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.postTitle}> Title </Text>
+      <ScrollView style={tw`p-4 bg-white`}>
+        <View style={tw`flex-1`}>
           <TextInput
-            value={newPostTitle}
-            onChangeText={setNewPostTitle}
-            style={styles.input}
-            placeholder="Title"
-            placeholderTextColor="#ccc"
-            autoFocus={true}
-            autoCapitalize="sentences"
-            autoCompleteType="off"
-            autoCorrect={false}
-            returnKeyType="next"
-            onSubmitEditing={() => {
-              this.secondTextInput.focus();
-            }}
+            style={tw`p-2 bg-white border border-gray-400 rounded mb-4`}
+            placeholder="Search..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
           />
+          {filteredPosts.map((post) => (
+            <View key={post.id} style={tw`bg-gray-100 p-4 rounded mb-4`}>
+              <Text style={tw`text-lg font-bold mb-2`}>{post.title}</Text>
+              <Text style={tw`text-base mb-4`}>{post.body}</Text>
+              <Text style={tw`text-gray-500 mb-2`}>{post.createdAt.toDate().toLocaleString()}</Text>
 
-          <Text style={styles.postTitle}> Content </Text>
-
-
-          <TextInput
-            value={newPostBody}
-            onChangeText={setNewPostBody}
-            style={[styles.input, styles.multilineInput]}
-            placeholder="Content"
-            placeholderTextColor="#ccc"
-            multiline={true}
-            numberOfLines={4}
-            returnKeyType="done"
-            backgroundColor="#f9f9f9"
-            ref={(input) => {
-              this.secondTextInput = input;
-            }}
-          />
-
-
-        </View>
-
-        <View>
-          <Text style={styles.postTitle}> Location </Text>
-          <GooglePlacesAutocomplete
-            placeholder="Search"
-            onPress={(data, details = null) => {
-              // 'details' is provided when fetchDetails = true
-              console.log(data, details);
-              setLocation(details.geometry.location);
-            }}
-            fetchDetails={true}
-            query={{
-              key: "AIzaSyD627hKqMDBrAMpyD2w204wfx0opjrKiUI",
-              language: "en",
-            }}
-            styles={{
-              container: {
-                flex: 0,
-              },
-              textInputContainer: {
-                width: "100%",
-              },
-              textInput: {
-                height: 40,
-                color: "#5d5d5d",
-                fontSize: 16,
-                backgroundColor: "#fff",
-                borderRadius: 20,
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-                marginBottom: 10,
-                borderWidth: 0.5,
-                borderColor: "#ddd",
-              },
-              listView: {
-                backgroundColor: "#fff",
-                borderWidth: 0.5,
-                borderColor: "#ddd",
-                marginHorizontal: 20,
-                elevation: 1,
-                shadowColor: "#000",
-                shadowOpacity: 0.1,
-                shadowOffset: { width: 0, height: 0 },
-                shadowRadius: 15,
-                marginTop: 10,
-              },
-              description: {
-                fontSize: 16,
-              },
-            }}
-          />
-          
-        </View>
-        <Button
-          style={styles.button}
-          title="Add Post"
-          onPress={addPost}
-        ></Button>
-        <ScrollView>
-          <View style={styles.postsContainer}>
-            {posts.map((post) => (
-              <View key={post.id} style={styles.postContainer}>
-                <Text style={styles.postTitle}>{post.title}</Text>
-                <Text style={styles.postBody}>{post.body}</Text>
-                <Text style={styles.postDate}>
-
-                </Text>
-
-                <TextInput
-                  style={styles.commentInput}
-                  placeholder="Add comment..."
-                  value={newComment}
-                  onChangeText={setNewComment}
-                  onSubmitEditing={() => addComment(post.id)}
-                />
-                <View style={styles.commentsContainer}>
-                  {post.comments.map((comment, index) => (
-                    <Text key={index} style={styles.comment}>
-                      {comment}
-                    </Text>
-                  ))}
-                </View>
+              <TextInput
+                style={tw`p-2 bg-white border border-gray-400 rounded mb-2`}
+                placeholder="Add comment..."
+                value={newComment}
+                onChangeText={setNewComment}
+                onSubmitEditing={() => addComment(post.id)}
+              />
+              <View style={tw`bg-gray-200 p-2 rounded`}>
+                {post.comments.map((comment, index) => (
+                  <Text key={index} style={tw`text-base text-gray-500 mb-2`}>
+                    {comment}
+                  </Text>
+                ))}
               </View>
-
-            ))}
-
-
-          </View>
-          
-        </ScrollView>
-
-      </View>
-      {/* </ScrollView> */}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+  
     </SafeAreaProvider>
   );
 }
@@ -289,5 +193,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
   },
+  searchInput: {
+    backgroundColor: "#fff",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  }
 
 });
