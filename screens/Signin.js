@@ -8,7 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import {
@@ -19,9 +19,7 @@ import {
 } from "firebase/auth";
 import { GoogleAuthProvider } from '@react-native-firebase/auth';
 import { getAuth, signInWithRedirect, getRedirectResult } from '@react-native-firebase/auth';
-
-//import * as WebBrowser from "expo-web-browser";
-//import * as Google from "expo-auth-session/providers/google";
+import { db } from "../firebase";
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 WebBrowser.maybeCompleteAuthSession();
@@ -29,34 +27,70 @@ WebBrowser.maybeCompleteAuthSession();
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [studentId, setStudentId] = useState("");
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace("Home");
-      }
-    });
-  }, []);
-
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Registered with:", user.email);
-      })
-      .catch((error) => alert(error.message));
+    const encodedStudentId = encodeURIComponent(studentId);
+
+    if (studentId) {
+      const profileDocRef = doc(db, "profiles", encodedStudentId);
+      getDoc(profileDocRef)
+        .then((doc) => {
+          if (doc.exists()) {
+            console.log("Student ID already exists in database.");
+            alert("Student ID is found. Please sign in.");
+          } else {
+            setDoc(profileDocRef, {
+              studentId: studentId,
+            }, { merge: true })
+              .then(() => {
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((userCredentials) => {
+                    const user = userCredentials.user;
+                    console.log("Registered with:", user.email);
+                    setDoc(profileDocRef, {
+                      email: user.email,
+                    })
+                  })
+                console.log("Profile document created successfully");
+                navigation.replace("Home");
+              })
+              .catch((error) => {
+                console.error("Error adding profile document: ", error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error getting profile document: ", error);
+        });
+    }
   };
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Logged in with:", user.email);
+    const encodedStudentId = encodeURIComponent(studentId);
+    const profileDocRef = doc(db, "profiles", encodedStudentId);
+    getDoc(profileDocRef)
+      .then((doc) => {
+        if (doc.exists()) {
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredentials) => {
+              const user = userCredentials.user;
+              console.log("Registered with:", user.email);
+            })
+          console.log("Student ID exists in database.");
+          navigation.replace("Home");
+        } else {
+          console.log("Student ID does not exist in database.");
+          alert("Student ID not found. Please sign up.");
+        }
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        console.error("Error getting profile document: ", error);
+      });
   };
+
 
   const [accessToken, setAccessToken] = React.useState();
   const [userInfo, setUserInfo] = React.useState();
@@ -65,20 +99,15 @@ function Signin() {
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "140130769187-c96husl24318t9fgvj6j3mccl4103gpq.apps.googleusercontent.com",
     expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
-    redirectUri: "https://auth.expo.io/@sara_mohamed/solutionsApp",
-  /*  responseType: "code",
-    shouldAutoExchangeCode: false,
-    extraParams: {
-      access_type: "offline"
-    },
-    prompt: 'consent'*/
   })
+
+  
 
   React.useEffect(() => {
     setMessage(JSON.stringify(response));
     if (response?.type === "success") {
       setAccessToken(response.authentication.accessToken);
-      console.log ("Sign in success");
+      console.log("Sign in success");
       navigation.navigate("Home");
     }
   }, [response]);
@@ -92,9 +121,8 @@ function Signin() {
       setUserInfo(data);
     });
     if (userInfo) {
-      console.log (userInfo.name)
-      
-      }
+      console.log(userInfo.name)
+    }
   }
 
   function showUserInfo() {
@@ -131,6 +159,13 @@ function Signin() {
           style={styles.input}
           secureTextEntry
         />
+
+        <TextInput
+          placeholder="Student ID"
+          value={studentId}
+          onChangeText={(text) => setStudentId(text)}
+          style={styles.input}
+        />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -143,12 +178,12 @@ function Signin() {
         >
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
-       
+
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}
-            onPress={accessToken ? getUserData : () => { promptAsync({showInRecents: true }) }}>Sign in with Google</Text>
+            onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}>Sign in with Google</Text>
         </TouchableOpacity>
 
       </View>
@@ -163,22 +198,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#f2f2f2",
+    padding: 20,
   },
   inputContainer: {
-    width: "80%",
+    width: "100%",
+    marginBottom: 20,
   },
   input: {
-    backgroundColor: "lightgray",
+    backgroundColor: "#ffffff",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 10,
+    fontSize: 16,
   },
   buttonContainer: {
-    width: "60%",
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 40,
   },
   button: {
     backgroundColor: "#0782F9",
@@ -186,21 +224,27 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    marginBottom: 10,
   },
   buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
+    backgroundColor: "#ffffff",
     borderColor: "#0782F9",
     borderWidth: 2,
   },
   buttonText: {
-    color: "white",
+    color: "#ffffff",
     fontWeight: "700",
-    fontSize: 16,
+    fontSize: 18,
   },
   buttonOutlineText: {
     color: "#0782F9",
     fontWeight: "700",
-    fontSize: 16,
+    fontSize: 18,
+  },
+  heading: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginBottom: 30,
+    textAlign: "center",
   },
 });
