@@ -5,6 +5,7 @@ import Feed from "../screens/Feed";
 import Map from "../screens/Map";
 import Addpost from "../screens/Addpost";
 import Search from "../screens/Resource";
+import CustomMarker from "./CustomMarker";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 //import TopNavigator from "./TopNavigator";
