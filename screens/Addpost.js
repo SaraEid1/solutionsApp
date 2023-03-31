@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Button,
   ScrollView,
+  FlatList
 } from "react-native";
 import {
   collection,
@@ -23,6 +24,8 @@ export default function Feed() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
   const [newComment, setNewComment] = useState("");
+  const [location, setLocation] = useState("")
+  const [address, setAddress] = useState("")
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
@@ -52,6 +55,8 @@ export default function Feed() {
       .then(() => {
         setNewPostTitle("");
         setNewPostBody("");
+        setLocation("")
+        setAddress("")
       })
       .catch((error) => {
         console.error("Error adding post: ", error);
@@ -60,7 +65,7 @@ export default function Feed() {
 
   return (
     <SafeAreaProvider>
-      <ScrollView style={tw`bg-gray-50`}>
+      <View style={tw`bg-gray-50`}>
         <View style={tw`p-4`}>
           <View style={tw`bg-white rounded-lg shadow-md p-4`}>
             <View style={tw`mb-4`}>
@@ -105,8 +110,10 @@ export default function Feed() {
             placeholder="Search"
             onPress={(data, details = null) => {
               // 'details' is provided when fetchDetails = true
-              console.log(data, details);
+              console.log("ADDRESS ", data.description);
               setLocation(details.geometry.location);
+              setAddress(data.description)
+             
             }}
             fetchDetails={true}
             query={{
@@ -159,7 +166,7 @@ export default function Feed() {
             />
           </View>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaProvider>
   );
 }
