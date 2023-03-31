@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { SearchBar } from '@rneui/themed';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import {
   View,
   Text,
@@ -8,6 +13,7 @@ import {
   TextField,
   Button,
   ScrollView,
+  FlatList
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { initializeApp } from "firebase/app";
@@ -52,31 +58,6 @@ export default function Feed() {
     return () => unsubscribe();
   }, []);
 
-  function addPost() {
-    console.log("Title: ", newPostTitle);
-    console.log("Body: ", newPostBody);
-    if (!newPostTitle || !newPostBody || !location) return;
-    console.log("button pressed")
-    addDoc(collection(db, "posts"), {
-      title: newPostTitle,
-      body: newPostBody,
-      createdAt: Timestamp.now(),
-      location: location,
-      comments: [],
-    })
-      .then(() => {
-        console.log("Post added successfully!");
-        setLocation({})
-        setNewPostTitle("");
-        setNewPostBody("");
-        console.log("location: ", location)
-       
-        
-      })
-      .catch((error) => {
-        console.error("Error adding post: ", error);
-      });
-  }
 
   function addComment(postId) {
     if (!newComment) return;
@@ -97,109 +78,110 @@ export default function Feed() {
     post.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const renderItem = ({ item: post }) => {
+    return (
+      <View key={post.id} style={styles.postContainer}>
+        <Text style={styles.postTitle}>{post.title}</Text>
+        <Text style={styles.postBody}>{post.body}</Text>
+        <Text style={styles.postDate}>
+          {post.createdAt.toDate().toLocaleString()}
+        </Text>
+        <TextInput
+          style={styles.commentInput}
+          placeholder="Add comment..."
+          value={''}
+          onChangeText={() => {}}
+          onSubmitEditing={() => addComment(post.id)}
+        />
+        <View style={styles.commentsContainer}>
+          <FlatList
+            data={post.comments}
+            renderItem={({ item: comment }) => (
+              <Text style={styles.comment}>{comment}</Text>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaProvider>
-      <ScrollView style={tw`p-4 bg-white`}>
-        <View style={tw`flex-1`}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.inputContainer}>
+        <View style={styles.searchInput}>
+          <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
           <TextInput
-            style={tw`p-2 bg-white border border-gray-400 rounded mb-4`}
+            style={{ flex: 1, marginLeft: 10 }}
             placeholder="Search..."
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
-          {filteredPosts.map((post) => (
-            <View key={post.id} style={tw`bg-gray-100 p-4 rounded mb-4`}>
-              <Text style={tw`text-lg font-bold mb-2`}>{post.title}</Text>
-              <Text style={tw`text-base mb-4`}>{post.body}</Text>
-              <Text style={tw`text-gray-500 mb-2`}>{post.createdAt.toDate().toLocaleString()}</Text>
-
-              <TextInput
-                style={tw`p-2 bg-white border border-gray-400 rounded mb-2`}
-                placeholder="Add comment..."
-                value={newComment}
-                onChangeText={setNewComment}
-                onSubmitEditing={() => addComment(post.id)}
-              />
-              <View style={tw`bg-gray-200 p-2 rounded`}>
-                {post.comments.map((comment, index) => (
-                  <Text key={index} style={tw`text-base text-gray-500 mb-2`}>
-                    {comment}
-                  </Text>
-                ))}
-              </View>
-            </View>
-          ))}
         </View>
-      </ScrollView>
-  
-    </SafeAreaProvider>
+      </View>
+      <FlatList
+        style={styles.postsContainer}
+        data={filteredPosts}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 20,
     paddingTop: 40,
   },
   inputContainer: {
     marginBottom: 10,
   },
-  input: {
+  searchInput: {
+    backgroundColor: '#fff',
+    padding: 10,
     marginBottom: 10,
-    width: "100%",
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   postsContainer: {
     flex: 1,
-
   },
   postContainer: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: '#f2f2f2',
     padding: 10,
     marginBottom: 10,
-
   },
-
   postTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 5,
   },
   postBody: {
     fontSize: 16,
     marginBottom: 10,
   },
+  postDate: {
+    fontSize: 12,
+    color: '#888',
+    marginBottom: 10,
+  },
   commentInput: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 5,
     marginBottom: 5,
   },
   commentsContainer: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: '#f9f9f9',
     padding: 5,
   },
   comment: {
     fontSize: 14,
     marginBottom: 5,
   },
-  button: {
-    backgroundColor: "#007AFF",
-    borderRadius: 5,
-    padding: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-  },
-  searchInput: {
-    backgroundColor: "#fff",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ccc",
-  }
-
 });

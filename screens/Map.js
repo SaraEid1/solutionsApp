@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import LottieView from 'lottie-react-native'
 import * as Location from 'expo-location';
 // import firebase from '../firebase';
+
 import {
   // getFirestore,
   collection,
@@ -116,8 +118,15 @@ export default function Maps() {
 
   if (isLoading) {
     return (
+     
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+         <Text  category={"h6"}>Loading</Text>
+         <LottieView
+                    autoPlay
+                    loop
+                    style={styles.lottie}
+          source={require("../assets/Loading.json")}
+        />
       </View>
     );
   }

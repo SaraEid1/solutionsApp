@@ -16,7 +16,7 @@ function Search() {
 
     const fetchResults = async () => {
         setIsLoading(true);
-        let modifiedQuery = query + 'safety%20resources%20for%20women%20OR%20disadvantaged%20minorities%20AND%20(inurl:video%20OR%20inurl:article)'
+        let modifiedQuery = query + 'resource for girls'
 
         try {
             const response = await fetch(
