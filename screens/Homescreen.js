@@ -6,20 +6,13 @@ import Tabs from "react-bootstrap/Tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BottomNavigator from "../components/Bottomnavigator";
 import { useRoute } from '@react-navigation/native';
-import { userInfo } from './Signin.js';
 
-export default function HomeScreen(props) {
-  console.log (userInfo)
 
-  //const [key, setKey] = useState("home");
+export default function HomeScreen({ route }) {
+  const { name } = route.params;
   return (
-    <View className="flex-1 bg-black">
-      <View className="p-4 px-8">
-        <Text className="font-extrabold text-[40px] text-white">Hello 👋</Text>
-        <Text className="font-extrabold text-[40px] text-white"> Welcome !
- </Text>
-      </View>
+    <View style={styles.container}>
+      <Text>Welcome, {name}!</Text>
     </View>
   );
-
 }

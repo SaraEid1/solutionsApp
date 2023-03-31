@@ -74,13 +74,22 @@ function Signin() {
     getDoc(profileDocRef)
       .then((doc) => {
         if (doc.exists()) {
-          signInWithEmailAndPassword(auth, email, password)
-            .then((userCredentials) => {
-              const user = userCredentials.user;
-              console.log("Registered with:", user.email);
-            })
-          console.log("Student ID exists in database.");
-          navigation.replace("Home");
+          const data = doc.data();
+          if (data.email === email) {
+            signInWithEmailAndPassword(auth, email, password)
+              .then((userCredentials) => {
+                const user = userCredentials.user;
+                console.log("Registered with:", user.email);
+                console.log("Student ID exists in database.");
+                navigation.replace("Home");
+              })
+              .catch((error) => {
+                console.error("Error signing in: ", error);
+              });
+          } else {
+            console.log("Email does not match.");
+            alert("Incorrect email for this student Id. Please try again.");
+          }
         } else {
           console.log("Student ID does not exist in database.");
           alert("Student ID not found. Please sign up.");
@@ -90,6 +99,7 @@ function Signin() {
         console.error("Error getting profile document: ", error);
       });
   };
+  
 
 
   const [accessToken, setAccessToken] = React.useState();
@@ -103,11 +113,41 @@ function Signin() {
 
   
 
+  const handleSignIn = async (email) => {
+    const profileDocRef = collection(db, "profiles");
+    const querySnapshot = await getDocs(query(profileDocRef, where("email", "==", email)));
+    console.log (querySnapshot.size)
+    console.log (email)
+    if (querySnapshot.size === 1) {
+      // User is already associated with a student ID, so sign them in and navigate to the home screen
+      const doc = querySnapshot.docs[0];
+      const studentId = doc.data().studentId;
+      await signInWithEmailAndPassword(auth, email, "password");
+      console.log (studentId)
+      console.log ("true if statment")
+     // navigation.navigate("Home");
+    } else {
+      // User is not associated with a student ID, so prompt them to enter one
+      const studentId = window.prompt("Please enter your student ID:");
+      if (studentId) {
+        // Store the student ID in the Firestore database
+        await addDoc(profileDocRef, {
+          email,
+          studentId
+        });
+        await signInWithEmailAndPassword(auth, email, "password");
+       // navigation.navigate("Home");
+      }
+    }
+  };
+
+
   React.useEffect(() => {
     setMessage(JSON.stringify(response));
     if (response?.type === "success") {
       setAccessToken(response.authentication.accessToken);
       console.log("Sign in success");
+      getUserData()
       navigation.navigate("Home");
     }
   }, [response]);
@@ -116,13 +156,13 @@ function Signin() {
     let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
-
+  
     userInfoResponse.json().then(data => {
       setUserInfo(data);
+      console.log(data.name); 
+      navigation.replace("Home", { name: data.name });
+
     });
-    if (userInfo) {
-      console.log(userInfo.name)
-    }
   }
 
   function showUserInfo() {
