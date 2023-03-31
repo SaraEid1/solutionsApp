@@ -1,13 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import LottieView from 'lottie-react-native'
 import * as Location from 'expo-location';
-import LottieView from "lottie-react-native";
+// import firebase from '../firebase';
+
+import {
+  // getFirestore,
+  collection,
+  onSnapshot,
+  // addDoc,
+  // doc,
+  // updateDoc,
+  // arrayUnion,
+} from "firebase/firestore";
+import { db } from "../firebase";
 
 export default function Maps() {
   const [location, setLocation] = useState(null);
+  const [coordinates, setCoordinates] = useState([])
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState(null);
+  const [initialRegion, setInitialRegion] = useState(null);
+
+
+
+
+  const extractCoordinates = (data) => {
+    const postsWithLocation = data
+      .filter((post) => post.location)
+      .map((post) => ({
+        latitude: post.location.lat,
+        longitude: post.location.lng,
+        title: post.title,
+      }));
+
+    return (postsWithLocation || []);
+  };
+
+
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
+      const data = snapshot.docs.map((doc) => {
+        const post = doc.data();
+        return {
+          id: doc.id,
+          ...post,
+        };
+      });
+      // console.log(data)
+      const extractedCoordinates = extractCoordinates(data);
+      setCoordinates(extractedCoordinates);
+
+
+    });
+    return () => unsubscribe();
+  }, []);
 
   const reverseGeocode = async () => {
     if (location) {
@@ -20,6 +69,33 @@ export default function Maps() {
       setAddress(formattedAddress);
     }
   };
+
+  useEffect(() => {
+
+    if (coordinates.length > 0) {
+      const filteredCoords = coordinates.filter((coord) =>
+        coord.latitude !== undefined && coord.longitude !== undefined
+      );
+      // console.log("coords: ", filteredCoords)
+      const minLat = Math.min(...filteredCoords.map((coord) => coord.latitude));
+      console.log("minlwt ", minLat)
+      const maxLat = Math.max(...filteredCoords.map((coord) => coord.latitude));
+      const minLng = Math.min(...filteredCoords.map((coord) => coord.longitude));
+      const maxLng = Math.max(...filteredCoords.map((coord) => coord.longitude));
+      const avgLat = (minLat + maxLat) / 2;
+      const avgLng = (minLng + maxLng) / 2;
+      const latDelta = Math.abs(maxLat - minLat) * 1.06;
+      const lngDelta = Math.abs(maxLng - minLng) * 1.06;
+      setInitialRegion({
+        latitude: avgLat,
+        longitude: avgLng,
+        latitudeDelta: latDelta,
+        longitudeDelta: lngDelta,
+      });
+    }
+  }, [coordinates]);
+
+
 
   useEffect(() => {
     (async () => {
@@ -39,6 +115,7 @@ export default function Maps() {
     reverseGeocode();
   }, [location]);
 
+
   if (isLoading) {
     return (
      
@@ -56,25 +133,39 @@ export default function Maps() {
 
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        }}
-      >
-        {location && (
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            title="My Location"
-          />
-        )}
-      </MapView>
+      {/* <Button title="Load Posts" onPress={fetchPosts} /> */}
+      {location ? (
+        <MapView
+          style={styles.map}
+          // initialRegion={coordinates.length > 0 ? initialRegion : null}
+        >
+          {location && (
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+              title="My Location"
+            />
+          )}
+
+          {/* {coordinates && coordinates.length > 0 && coordinates.map((post, index) => (
+
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: post.latitude,
+                longitude: post.longitude,
+              }}
+              title={post.title}
+            />
+          ) */}
+
+
+          {/* )} */}
+
+        </MapView>
+      ) : (<Text>No Location data available</Text>)}
       {address && <Text style={styles.address}>{address}</Text>}
     </View>
   );
@@ -88,12 +179,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   address: {
+
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 12,
-  },
-  lottie: {
-    flex: 1,
-    alignSelf: 'center',
   },
 });

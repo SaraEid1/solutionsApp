@@ -4,6 +4,7 @@ import HomeScreen from "../screens/Homescreen";
 import Feed from "../screens/Feed";
 import Map from "../screens/Map";
 import Addpost from "../screens/Addpost";
+import Search from "../screens/Resource";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 //import TopNavigator from "./TopNavigator";
@@ -59,7 +60,7 @@ const BottomNavigator = () => {
           }}
         />
 
-<Tab.Screen
+        <Tab.Screen
           name="Addpost"
           component={Addpost}
           options={{
@@ -73,7 +74,22 @@ const BottomNavigator = () => {
             ),
           }}
         />
-    </Tab.Navigator>
+
+        <Tab.Screen
+          name="Search"
+          component={Search}
+          options={{
+            tabBarLabel: "Search",
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons
+                name="link-box-variant-outline"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </SafeAreaProvider>
   );
 };
