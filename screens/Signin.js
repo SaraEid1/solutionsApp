@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth } from "../firebase";
@@ -17,8 +18,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { GoogleAuthProvider } from '@react-native-firebase/auth';
-import { getAuth, signInWithRedirect, getRedirectResult } from '@react-native-firebase/auth';
+
+const logo = require('../assets/google.png');
 import { db } from "../firebase";
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
@@ -99,7 +100,7 @@ function Signin() {
         console.error("Error getting profile document: ", error);
       });
   };
-  
+
 
 
   const [accessToken, setAccessToken] = React.useState();
@@ -111,21 +112,21 @@ function Signin() {
     expoClientId: "140130769187-hkisfb0tqfu3mpohjfq5cjn8dma3kr6v.apps.googleusercontent.com",
   })
 
-  
+
 
   const handleSignIn = async (email) => {
     const profileDocRef = collection(db, "profiles");
     const querySnapshot = await getDocs(query(profileDocRef, where("email", "==", email)));
-    console.log (querySnapshot.size)
-    console.log (email)
+    console.log(querySnapshot.size)
+    console.log(email)
     if (querySnapshot.size === 1) {
       // User is already associated with a student ID, so sign them in and navigate to the home screen
       const doc = querySnapshot.docs[0];
       const studentId = doc.data().studentId;
       await signInWithEmailAndPassword(auth, email, "password");
-      console.log (studentId)
-      console.log ("true if statment")
-     // navigation.navigate("Home");
+      console.log(studentId)
+      console.log("true if statment")
+      // navigation.navigate("Home");
     } else {
       // User is not associated with a student ID, so prompt them to enter one
       const studentId = window.prompt("Please enter your student ID:");
@@ -136,7 +137,7 @@ function Signin() {
           studentId
         });
         await signInWithEmailAndPassword(auth, email, "password");
-       // navigation.navigate("Home");
+        // navigation.navigate("Home");
       }
     }
   };
@@ -156,16 +157,16 @@ function Signin() {
     let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
-  
+
     userInfoResponse.json().then(data => {
       setUserInfo(data);
-      console.log(data.name); 
+      console.log(data.name);
       navigation.replace("Home", { name: data.name });
 
     });
   }
 
-  function showUserInfo() {
+  function showUserInfo(userInfo) {
     if (userInfo) {
       return (
         <View style={styles.userInfo}>
@@ -176,35 +177,40 @@ function Signin() {
     }
   }
 
+
   return (
-    <KeyboardAvoidingView
+    <View
       className="flex-1 items-center justify-center bg-black"
       style={styles.container}
       behavior="padding"
     >
-      <Text className="font-extrabold text-2xl text-white mb-5">
-        Log In to get started!{" "}
+      <Text style={styles.welcome}>
+      HerSupportNet
       </Text>
       <View style={styles.inputContainer}>
+        <Text style={styles.titles}>Email Address</Text>
         <TextInput
-          placeholder="Email"
+          placeholder="Email Address"
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
+        <Text style={styles.titles}>Student Number</Text>
+
         <TextInput
-          placeholder="Password"
+          placeholder="123456789"
+          value={studentId}
+          onChangeText={(text) => setStudentId(text)}
+          style={styles.input}
+        />
+
+        <Text style={styles.titles}>Password</Text>
+        <TextInput
+          placeholder="•••••••••••"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
-        />
-
-        <TextInput
-          placeholder="Student ID"
-          value={studentId}
-          onChangeText={(text) => setStudentId(text)}
-          style={styles.input}
         />
       </View>
 
@@ -222,12 +228,13 @@ function Signin() {
         <TouchableOpacity
           style={[styles.button, styles.buttonOutline]}
         >
+          <Image source={logo} style={styles.image} />
           <Text style={styles.buttonOutlineText}
             onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}>Sign in with Google</Text>
         </TouchableOpacity>
 
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
@@ -238,7 +245,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ffffff",
     padding: 20,
   },
   inputContainer: {
@@ -246,10 +253,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
+
+    borderWidth: 2,
+    borderColor: '#C4C4C4',
+    borderRadius: 20,
     backgroundColor: "#ffffff",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 10,
     marginTop: 10,
     fontSize: 16,
   },
@@ -257,19 +267,31 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    
   },
   button: {
     backgroundColor: "#0782F9",
     width: "100%",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 23,
     alignItems: "center",
     marginBottom: 10,
+    backgroundColor: '#FF7D5C',
+  },
+  titles:{
+    fontWeight: 500,
+    fontSize: 18,
+    lineHeight: 18,
+    marginTop:24,
+    color: '#1C1C1C',
   },
   buttonOutline: {
     backgroundColor: "#ffffff",
-    borderColor: "#0782F9",
+    borderColor: "#FF7D5C",
     borderWidth: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "#ffffff",
@@ -277,7 +299,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "#1C1C1C",
     fontWeight: "700",
     fontSize: 18,
   },
@@ -287,4 +309,16 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     textAlign: "center",
   },
+  image: {
+    width: 20, // set the width and height of the image according to your requirement
+    height: 20,
+    marginRight: 10, // add this to create some space between the image and text
+  },
+
+  welcome:{
+    fontWeight: "bold",
+    fontSize: 32,
+    marginBottom: 30,
+    color:"#FF4010",
+  }
 });

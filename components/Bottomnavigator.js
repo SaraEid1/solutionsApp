@@ -1,91 +1,108 @@
-import React from "react";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import HomeScreen from "../screens/Homescreen";
-import Feed from "../screens/Feed";
-import Map from "../screens/Map";
-import Addpost from "../screens/Addpost";
-import Search from "../screens/Resource";
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-//import TopNavigator from "./TopNavigator";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import HomeScreen from '../screens/Homescreen';
+import Feed from '../screens/Feed';
+import Map from '../screens/Map';
+import Addpost from '../screens/Addpost';
+import Resources from '../screens/Resource';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles.container}>
       <Tab.Navigator
-        labeled={false}
+        tabBarOptions={{
+          style: styles.tabBarStyle,
+          showLabel: false
+        }}
         initialRouteName="HomeScreen"
-        inactiveColor="#ffffff"
-        barStyle={{ backgroundColor: "#000000" }}
       >
         <Tab.Screen
-          name="HomeScreen"
+          name=" "
           component={HomeScreen}
           options={{
-            tabBarLabel: "Home",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name="home" color={focused ? '#FF7D5C' : '#7A7A7A'} size={focused ? 40 : 26} />
             ),
           }}
         />
         <Tab.Screen
-          name="Feed"
+          name="Community Posts"
           component={Feed}
+          
           options={{
-            tabBarLabel: "Feed",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="post"
-                color={color}
-                size={26}
-              />
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 18,
+            },
+            headerTitleAlign: "center",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name="post" color={focused ? '#FF7D5C' : '#7A7A7A'} size={focused ? 40 : 26} />
             ),
           }}
         />
+
+        <Tab.Screen
+          name="New Post"
+          component={Addpost}
+          options={{
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 18,
+            },
+            headerTitleAlign: "center",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name="note-plus-outline" color={focused ? '#FF7D5C' : '#7A7A7A'} size={focused ? 40 : 26} />
+            ),
+          }}
+        />
+
         <Tab.Screen
           name="Map"
           component={Map}
           options={{
-            tabBarLabel: "Map",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="map-search"
-                color={color}
-                size={26}
-              />
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 18,
+            },
+            headerTitleAlign: "center",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name="map-search" color={focused ? '#FF7D5C' : '#7A7A7A'} size={focused ? 40 : 26} />
             ),
           }}
         />
 
-        <Tab.Screen
-          name="Addpost"
-          component={Addpost}
-          options={{
-            tabBarLabel: "Addpost",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="note-plus-outline"
-                color={color}
-                size={26}
-              />
-            ),
-          }}
-        />
+
 
         <Tab.Screen
-          name="Search"
-          component={Search}
+          name="Resources"
+          component={Resources}
           options={{
-            tabBarLabel: "Search",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="link-box-variant-outline"
-                color={color}
-                size={26}
-              />
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 20,
+            },
+            headerTitleAlign: "center",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons name="link-box-variant-outline" color={focused ? '#FF7D5C' : '#7A7A7A'} size={focused ? 40 : 26} />
             ),
           }}
         />
@@ -93,5 +110,15 @@ const BottomNavigator = () => {
     </SafeAreaProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF'
+  },
+  tabBarStyle: {
+    backgroundColor: '#000000',
+  }
+});
 
 export default BottomNavigator;

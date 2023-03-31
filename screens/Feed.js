@@ -3,6 +3,8 @@ import { SearchBar } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/core";
 
 import {
   View,
@@ -39,6 +41,7 @@ export default function Feed() {
   const [newComment, setNewComment] = useState("");
   const [location, setLocation] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
@@ -78,6 +81,7 @@ export default function Feed() {
     post.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  
   const renderItem = ({ item: post }) => {
     return (
       <View key={post.id} style={styles.postContainer}>
@@ -108,15 +112,25 @@ export default function Feed() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.inputContainer}>
-        <View style={styles.searchInput}>
-          <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
-          <TextInput
-            style={{ flex: 1, marginLeft: 10 }}
-            placeholder="Search..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
+      <View>
+        <View style={styles.inputContainer}>
+          <View style={styles.searchInput}>
+            <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
+            <TextInput
+              style={{ flex: 1, marginLeft: 10 }}
+              placeholder="Search..."
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate ("New Post")} style={styles.newPostButton}>
+          <MaterialCommunityIcons
+          name="plus-circle-outline"
+          size={30}
+          color="#ffffff"
+        />
+            <Text style={styles.newPostButtonText}>New Post</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <FlatList
@@ -129,15 +143,35 @@ export default function Feed() {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    paddingTop: 40,
+  },
+  newPostButton:{
+    backgroundColor: '#FF7D5C',
+    borderRadius: 20,
+    width: 296,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  
+  newPostButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    marginLeft: 10,
   },
   inputContainer: {
     marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   searchInput: {
     backgroundColor: '#fff',
@@ -153,7 +187,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   postContainer: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#FFF5F1',
+    borderRadius: 10,
+    borderWidth:1,
+  borderColor: '#FFCDB9',
     padding: 10,
     marginBottom: 10,
   },

@@ -6,13 +6,8 @@ import * as Location from 'expo-location';
 // import firebase from '../firebase';
 
 import {
-  // getFirestore,
   collection,
   onSnapshot,
-  // addDoc,
-  // doc,
-  // updateDoc,
-  // arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
