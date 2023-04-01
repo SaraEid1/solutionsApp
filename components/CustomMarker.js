@@ -78,7 +78,7 @@ const CustomMarker = () => {
                         // address: post["location"]["address"]
 
 
-                    }W
+                    }
 
                 }
 
