@@ -1,4 +1,4 @@
-# solutionsApp
+# EmpowerHer
 
 ## How to run the app:
 
@@ -8,6 +8,6 @@ npm install
 ```
 Connect an android device (emulator or physical device) and run the server:
 ```ruby
-expo start
+expo start --tunnel
 ```
 
