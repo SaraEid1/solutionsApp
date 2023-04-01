@@ -24,6 +24,7 @@ export default function Addpost() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
   const [newComment, setNewComment] = useState("");
+  const [location, setLocation] = useState(null); // define location state variable
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
@@ -109,12 +110,14 @@ export default function Addpost() {
               <Text style={tw`text-lg font-bold text-gray-700 mb-2`}> Location </Text>
               <GooglePlacesAutocomplete
                 placeholder="Search"
-                onPress={(data, details = null) => {
+                textInputProps={{
+                  placeholderTextColor: '#FFCDB9',
+                }}
+               onPress={(data, details = null) => {
                   // 'details' is provided when fetchDetails = true
                   console.log(data, details);
                   setLocation(details.geometry.location);
                 }}
-                placeholderTextColor="#FFCDB9"
               
                 fetchDetails={true}
                 query={{
@@ -209,5 +212,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     marginLeft: 10,
+    fontWeight: 'bold'
   },
 });

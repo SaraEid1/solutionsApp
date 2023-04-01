@@ -20,7 +20,7 @@ function Search() {
 
     const fetchResults = async () => {
         setIsLoading(true);
-        let modifiedQuery = query + 'mental health and self defense resources for women'
+        let modifiedQuery = query + 'resource for women'
 
         try {
             const response = await fetch(
@@ -53,7 +53,7 @@ function Search() {
     const fetchVideos = async () => {
         try {
             const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?part=id&maxResults=2&q=self+defense|mental+health+for+women&type=video&videoDefinition=high&key=AIzaSyCmQSRBrYAfz4wNkQ-hQ6tWlMyxGtIAi9c`
+                `https://www.googleapis.com/youtube/v3/search?part=id&maxResults=2&q=self+defense|mental+health+for+women&type=video&videoDefinition=high&key=${YOUR_API_KEY}`
             );
             if (response.ok) {
                 const data = await response.json();
@@ -74,7 +74,7 @@ function Search() {
                     {videoIds.map(id => (
                         <View key={id}>
                             <YouTubeIframe
-                                apiKey='AIzaSyCmQSRBrYAfz4wNkQ-hQ6tWlMyxGtIAi9c'
+                                apiKey={YOUR_API_KEY}
                                 videoId={id}
                                 width={320}
                                 height={180}

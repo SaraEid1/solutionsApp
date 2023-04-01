@@ -185,7 +185,7 @@ function Signin() {
       behavior="padding"
     >
       <Text style={styles.welcome}>
-      HerSupportNet
+      EmpowerHer
       </Text>
       <View style={styles.inputContainer}>
         <Text style={styles.titles}>Email Address</Text>

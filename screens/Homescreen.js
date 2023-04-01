@@ -30,11 +30,13 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const words = ["emergency", "Emergency", "EMERGENCY"];
+
     const q = query(
       collection(getFirestore(), "posts"),
-      where("titleArray", "array-contains", "emergency".toLowerCase()),
+      where("titleArray", "array-contains-any", words),
       orderBy("createdAt", "desc"),
-      limit(3)
+      limit(2)
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => {
@@ -76,9 +78,9 @@ export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Dashboard</Text>
-      <Text style={styles.recentlyText}>Featured Posts</Text>
+      <Text style={styles.featuredText}>Featured Posts</Text>
       <FlatList
-
+        vertical
         showsHorizontalScrollIndicator={false}
         style={styles.postsContainerFeatured}
         data={featuredPosts}
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
   postsContainerFeatured: {
     flexDirection: 'row',
     marginVertical: 10,
+   
   },
   postContainer: {
     padding: 10,
@@ -131,12 +134,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 11,
     minWidth: 300,
-    maxWidth: 400,
     backgroundColor: '#FFF5F1',
-    maxHeight: 140,
     marginBottom: 15,
     borderColor: '#FFCDB9',
     borderWidth: 1,
+    
   },
   postTitle: {
     fontWeight: "bold",
@@ -149,13 +151,20 @@ const styles = StyleSheet.create({
     color: "#666"
   },
   postDate: {
-    color: "#999",
+    color: "#0000",
+    fontSize: 12,
+  },
+  featuredText: {
+    fontWeight: "bold",
+    fontSize: 22,
+    marginBottom: 10,
+    marginTop: 30,
+    color: "#333"
   },
   recentlyText: {
     fontWeight: "bold",
     fontSize: 22,
     marginBottom: 10,
-    marginTop: 15,
     color: "#333"
   },
   title: {
