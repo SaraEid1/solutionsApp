@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import HomeScreen from "../screens/Homescreen";
+import Feed from "../screens/Feed";
+
+
+import CustomMarker from "./CustomMarker";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 
-import HomeScreen from '../screens/Homescreen';
-import Feed from '../screens/Feed';
 import Map from '../screens/Map';
 import Addpost from '../screens/Addpost';
 import Resources from '../screens/Resource';
@@ -71,7 +75,7 @@ const BottomNavigator = () => {
 
         <Tab.Screen
           name="Map"
-          component={Map}
+          component={CustomMarker}
           options={{
             headerStyle: {
             },

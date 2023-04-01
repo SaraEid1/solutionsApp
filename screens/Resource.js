@@ -10,7 +10,6 @@ import YouTubeIframe from 'react-native-youtube-iframe';
 function Search() {
     const YOUR_API_KEY = "AIzaSyAMupgR8rLSPwc1vIGpqT7kTRMQkOzDv74"
     const YOUR_CSE_ID = "f5ba8984e6c9e4ca3"
-
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [isSearchButtonClicked, setIsSearchButtonClicked] = useState(false);

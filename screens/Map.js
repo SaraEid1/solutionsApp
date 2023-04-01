@@ -1,57 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import LottieView from 'lottie-react-native'
 import * as Location from 'expo-location';
 // import firebase from '../firebase';
-
 import {
   collection,
   onSnapshot,
+  where,
+  query
 } from "firebase/firestore";
 import { db } from "../firebase";
+import LottieView from 'lottie-react-native'
 
 export default function Maps() {
   const [location, setLocation] = useState(null);
   const [coordinates, setCoordinates] = useState([])
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState(null);
-  const [initialRegion, setInitialRegion] = useState(null);
+  const [region, setRegion] = useState(null);
+  const [mapLayout, setMapLayout] = useState(null);
+  const [zoomLevel] = useState(0.06);
+  const [visibleCoordinates, setCurrentCoordinates] = useState([]);
 
 
-
-
-  const extractCoordinates = (data) => {
-    const postsWithLocation = data
-      .filter((post) => post.location)
-      .map((post) => ({
-        latitude: post.location.lat,
-        longitude: post.location.lng,
-        title: post.title,
-      }));
-
-    return (postsWithLocation || []);
-  };
-
-
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        const post = doc.data();
-        return {
-          id: doc.id,
-          ...post,
-        };
-      });
-      // console.log(data)
-      const extractedCoordinates = extractCoordinates(data);
-      setCoordinates(extractedCoordinates);
-
-
-    });
-    return () => unsubscribe();
-  }, []);
+  const handleRegionChange = (region) => {
+    setCurrentCoordinates(region);
+  }
 
   const reverseGeocode = async () => {
     if (location) {
@@ -60,35 +34,10 @@ export default function Maps() {
         longitude: location.coords.longitude,
       });
 
-      let formattedAddress = `${result.name}, ${result.street}, ${result.postalCode}, ${result.city}, ${result.region}`;
+      let formattedAddress = `${result.name}, ${result.street}, ${result.city}`;
       setAddress(formattedAddress);
     }
   };
-
-  useEffect(() => {
-
-    if (coordinates.length > 0) {
-      const filteredCoords = coordinates.filter((coord) =>
-        coord.latitude !== undefined && coord.longitude !== undefined
-      );
-      // console.log("coords: ", filteredCoords)
-      const minLat = Math.min(...filteredCoords.map((coord) => coord.latitude));
-      console.log("minlwt ", minLat)
-      const maxLat = Math.max(...filteredCoords.map((coord) => coord.latitude));
-      const minLng = Math.min(...filteredCoords.map((coord) => coord.longitude));
-      const maxLng = Math.max(...filteredCoords.map((coord) => coord.longitude));
-      const avgLat = (minLat + maxLat) / 2;
-      const avgLng = (minLng + maxLng) / 2;
-      const latDelta = Math.abs(maxLat - minLat) * 1.06;
-      const lngDelta = Math.abs(maxLng - minLng) * 1.06;
-      setInitialRegion({
-        latitude: avgLat,
-        longitude: avgLng,
-        latitudeDelta: latDelta,
-        longitudeDelta: lngDelta,
-      });
-    }
-  }, [coordinates]);
 
 
 
@@ -113,13 +62,13 @@ export default function Maps() {
 
   if (isLoading) {
     return (
-     
+
       <View style={styles.container}>
-         <Text  category={"h6"}>Loading</Text>
-         <LottieView
-                    autoPlay
-                    loop
-                    style={styles.lottie}
+        <Text category={"h6"}>Loading</Text>
+        <LottieView
+          autoPlay
+          loop
+          style={styles.lottie}
           source={require("../assets/Loading.json")}
         />
       </View>
@@ -128,41 +77,53 @@ export default function Maps() {
 
   return (
     <View style={styles.container}>
-      {/* <Button title="Load Posts" onPress={fetchPosts} /> */}
-      {location ? (
-        <MapView
-          style={styles.map}
-          // initialRegion={coordinates.length > 0 ? initialRegion : null}
-        >
-          {location && (
-            <Marker
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-              title="My Location"
-            />
-          )}
+      <View>
 
-          {/* {coordinates && coordinates.length > 0 && coordinates.map((post, index) => (
+        {location ? (
+          <MapView
 
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: post.latitude,
-                longitude: post.longitude,
-              }}
-              title={post.title}
-            />
-          ) */}
+            style={{ height: '100%' }} // add minHeight style
+
+            initialRegion={region || {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+              latitudeDelta: 0.03,
+              longitudeDelta: 0.03,
+              latitudeDelta: zoomLevel,
+              longitudeDelta: zoomLevel,
+            }}
+
+            onLayout={(event) => setMapLayout(event.nativeEvent.layout)}
+
+            onRegionChangeComplete={handleRegionChange}
+          >
+
+            {mapLayout && location && (
+
+              <Marker
+                coordinate={{
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                }}
+                title={address}
+                pinColor={'blue'}
+                opacity={0.85}
+              />
+
+            )}
 
 
-          {/* )} */}
 
-        </MapView>
-      ) : (<Text>No Location data available</Text>)}
-      {address && <Text style={styles.address}>{address}</Text>}
+          </MapView>) :
+
+          (<View style={styles.mapPlaceholder} />)
+
+        }
+
+      </View>
+
     </View>
+
   );
 }
 
