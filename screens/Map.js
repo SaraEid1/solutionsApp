@@ -27,34 +27,6 @@ export default function Maps() {
     setCurrentCoordinates(region);
   }
 
-  useEffect(() => {
-    if (visibleCoordinates.length > 0) {
-      const unsubscribe = onSnapshot(
-        query(collection(db, "posts"),
-          where("latitude", ">=", visibleCoordinates.minLatitude),
-          where("latitude", "<=", visibleCoordinates.maxLatitude),
-          where("longitude", ">=", visibleCoordinates.minLongitude),
-          where("longitude", "<=", visibleCoordinates.maxLongitude)),
-        (snapshot) => {
-          console.log("SNAPSHOT OBJECT: ", snapshot)
-          const data = snapshot.docs.map((doc) => {
-            const post = doc.data();
-            return {
-              id: doc.id,
-              ...post,
-            };
-          });
-          console.log("DATA FROM DATABASE: ", data)
-
-          // const extractedCoordinates = extractCoordinates(data);
-          // console.log(extractedCoordinates)
-
-          setCoordinates(data);
-        });
-      return () => unsubscribe();
-    }
-  }, [visibleCoordinates]);
-
   const reverseGeocode = async () => {
     if (location) {
       const [result] = await Location.reverseGeocodeAsync({

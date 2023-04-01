@@ -48,7 +48,8 @@
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.11",
-    "tailwind-react-native-classnames": "^1.5.1"
+    "tailwind-react-native-classnames": "^1.5.1",
+    "undefined": "react-native-vector-icons/FontAwesome"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

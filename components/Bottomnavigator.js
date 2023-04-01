@@ -48,7 +48,7 @@ const BottomNavigator = () => {
         />
         <Tab.Screen
           name="Map"
-          component={Map}
+          component={CustomMarker}
           options={{
             tabBarLabel: "Map",
             tabBarIcon: ({ color }) => (
