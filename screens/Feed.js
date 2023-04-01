@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SearchBar } from '@rneui/themed';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+//import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+//import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/core";
@@ -113,7 +113,6 @@ export default function Feed() {
       <View>
         <View style={styles.inputContainer}>
           <View style={styles.searchInput}>
-            <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
             <TextInput
               style={{ flex: 1, marginLeft: 10 }}
               placeholder="Search..."

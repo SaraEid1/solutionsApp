@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+//import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+//import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import YouTubeIframe from 'react-native-youtube-iframe';
 
@@ -83,7 +83,6 @@ function Search() {
                 </View>
                 <View style={styles.inputContainer}>
                     <View style={styles.searchInput}>
-                        <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
                         <TextInput
                             style={{ flex: 1, marginLeft: 10 }}
                             placeholder="Search"

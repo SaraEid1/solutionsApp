@@ -160,8 +160,7 @@ function Signin() {
 
     userInfoResponse.json().then(data => {
       setUserInfo(data);
-      console.log(data.name);
-      navigation.replace("Home", { name: data.name });
+      navigation.replace("Home");
 
     });
   }
