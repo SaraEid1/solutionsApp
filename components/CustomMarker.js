@@ -69,24 +69,16 @@ const CustomMarker = () => {
 
                 const post = doc.data();
 
-
-
-
                 if ("location" in post) {
-
                     // console.log("ADDRESS", address)
 
                     return {
 
                         location: post["location"],
-
                         // address: post["location"]["address"]
 
 
-
-
-
-                    }
+                    }W
 
                 }
 
@@ -170,13 +162,7 @@ const CustomMarker = () => {
 
             });
 
-
-
-
         console.log("filtered Locations: ", filteredLocations);
-
-
-
 
         return filteredLocations;
 
@@ -188,9 +174,7 @@ const CustomMarker = () => {
     const handleRegionChangeComplete = (newRegion) => {
 
         setRegion(newRegion);
-
         console.log('Map range:', newRegion);
-
     };
 
 
@@ -255,11 +239,7 @@ const CustomMarker = () => {
             >
 
                 {markersToShow.map((coordinate, index) => {
-
                     // console.log(coordinate.address)
-
-
-
 
                     return (
 
@@ -271,11 +251,7 @@ const CustomMarker = () => {
                             key={`${coordinate.lat}-${coordinate.lng}-${index}`}
 
                             coordinate={{ latitude: coordinate.lat, longitude: coordinate.lng }}
-
-                        // title={coordinate.address}
-
-
-
+                            // title={coordinate.address}
 
                         />
 
