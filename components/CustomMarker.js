@@ -35,11 +35,12 @@ const CustomMarker = () => {
             const data = snapshot.docs.map((doc) => {
                 const post = doc.data();
 
-                if ("location" in post && "address" in post) {
+                if ("location" in post) {
                     // console.log("ADDRESS", address)
                     return {
                         location: post["location"],
-                        address: post["address"]
+                        // address: post["location"]["address"]
+
 
                     }
                 }
@@ -84,14 +85,14 @@ const CustomMarker = () => {
                 return latWithinBounds && lngWithinBounds;
             });
 
-        // console.log("filtered Locations: ", filteredLocations);
+        console.log("filtered Locations: ", filteredLocations);
 
         return filteredLocations;
     };
 
     const handleRegionChangeComplete = (newRegion) => {
         setRegion(newRegion);
-        // console.log('Map range:', newRegion);
+        console.log('Map range:', newRegion);
     };
 
 
@@ -124,14 +125,14 @@ const CustomMarker = () => {
                 onRegionChangeComplete={handleRegionChangeComplete}
             >
                 {markersToShow.map((coordinate, index) => {
-                    console.log(coordinate.address)
+                    // console.log(coordinate.address)
 
                     return (
 
                         <Marker
                             key={`${coordinate.lat}-${coordinate.lng}-${index}`}
                             coordinate={{ latitude: coordinate.lat, longitude: coordinate.lng }}
-                            title={coordinate.Address}
+                            // title={coordinate.address}
 
                         />
                     );
