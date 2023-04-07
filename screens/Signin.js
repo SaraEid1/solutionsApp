@@ -224,12 +224,11 @@ function Signin() {
           <Text style={styles.buttonOutlineText}>Sign Up</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <TouchableOpacity onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}
           style={[styles.button, styles.buttonOutline]}
         >
           <Image source={logo} style={styles.image} />
-          <Text style={styles.buttonOutlineText}
-            onPress={accessToken ? getUserData : () => { promptAsync({ showInRecents: true }) }}>Sign in with Google</Text>
+          <Text style={styles.buttonOutlineText}> Sign in with Google</Text>
         </TouchableOpacity>
 
       </View>

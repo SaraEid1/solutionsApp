@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/Homescreen";
 import Signin from "./screens/Signin";
 import Addpost from "./screens/Addpost";
-
+import Location from "./screens/Location";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomNavigator from "./components/Bottomnavigator";
 import { Platform } from 'react-native';
@@ -127,6 +127,12 @@ return unsubscribe;
 <Stack.Screen
           name="Addpost"
           component={Addpost}
+          options={{ headerShown: false }}
+        />
+
+<Stack.Screen
+          name="Location"
+          component={Location}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
