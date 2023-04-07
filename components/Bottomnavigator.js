@@ -47,7 +47,7 @@ const BottomNavigator = () => {
         />
       );
     },
-    headerShown: false,
+    
     headerStyle: {
     },
     headerTitleStyle: {
@@ -68,11 +68,76 @@ const BottomNavigator = () => {
         initialRouteName="HomeScreen"
         screenOptions={screenOptions}
       >
-        <Tab.Screen name="HomeScreen" component={HomeScreen} />
-        <Tab.Screen name="Community Posts" component={Feed} />
-        <Tab.Screen name="New Post" component={Addpost} />
-        <Tab.Screen name="Map" component={CustomMarker} />
-        <Tab.Screen name="Resources" component={Resources} />
+        <Tab.Screen
+          name=" "
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Community Posts"
+          component={Feed}
+          
+          options={{
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 18,
+            },
+            headerTitleAlign: "center",
+          }}
+        />
+
+        <Tab.Screen
+          name="New Post"
+          component={Addpost}
+          options={{
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 18,
+            },
+            headerTitleAlign: "center",
+          }}
+        />
+
+        <Tab.Screen
+          name="Map"
+          component={CustomMarker}
+          options={{
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 18,
+              
+            },
+            headerTitleAlign: "center",
+          }}
+        />
+
+
+
+        <Tab.Screen
+          name="Resources"
+          component={Resources}
+          options={{
+            headerStyle: {
+            },
+            headerTitleStyle: {
+              fontSize: 32,
+              fontWeight: 'semibold',
+              marginTop: 20,
+            },
+            headerTitleAlign: "center",
+          }}
+        />
       </Tab.Navigator>
     </SafeAreaProvider>
   );

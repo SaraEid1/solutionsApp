@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 10,
-        marginTop: 20,
+        marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
     },
