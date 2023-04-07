@@ -114,7 +114,9 @@ function Search() {
                             {results.map((result) => (
                                 <View key={result.cacheId} style={styles.result}>
                                     <Text style={styles.link}>{result.displayLink}</Text>
-                                    <Text style={styles.title}>{result.title}</Text>
+                                    <TouchableOpacity onPress={() => handleTitlePress(result)} >
+                                        <Text style={styles.title}>{result.title}</Text>
+                                    </TouchableOpacity>
                                     <Text style={styles.snippet}>{result.snippet}</Text>
                                 </View>
                             ))}
