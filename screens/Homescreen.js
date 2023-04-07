@@ -125,9 +125,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 11,
     minWidth: 100,
-    maxWidth: 300,
+    maxWidth: 210,
     backgroundColor: '#FFCDB9',
-    maxHeight: 140,
+    maxHeight: 180,
   },
   postContainerfeatured: {
     padding: 10,
