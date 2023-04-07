@@ -217,5 +217,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     marginLeft: 10,
+    fontWeight: 'bold'
   },
 });

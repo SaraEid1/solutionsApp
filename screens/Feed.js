@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SearchBar } from '@rneui/themed';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+//import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+//import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/core";
@@ -81,7 +81,6 @@ export default function Feed() {
     post.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  
   const renderItem = ({ item: post }) => {
     return (
       <View key={post.id} style={styles.postContainer}>
@@ -93,29 +92,27 @@ export default function Feed() {
         <TextInput
           style={styles.commentInput}
           placeholder="Add comment..."
-          value={''}
-          onChangeText={() => {}}
+          value={newComment}
+          onChangeText={setNewComment}
           onSubmitEditing={() => addComment(post.id)}
         />
         <View style={styles.commentsContainer}>
-          <FlatList
-            data={post.comments}
-            renderItem={({ item: comment }) => (
+          {post.comments.map((comment, index) => (
+            <View key={index} style={styles.commentContainer}>
               <Text style={styles.comment}>{comment}</Text>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
+            </View>
+          ))}
         </View>
       </View>
     );
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <View style={styles.inputContainer}>
           <View style={styles.searchInput}>
-            <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
             <TextInput
               style={{ flex: 1, marginLeft: 10 }}
               placeholder="Search..."
@@ -167,6 +164,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     marginLeft: 10,
+    fontWeight: 'bold'
   },
   inputContainer: {
     marginBottom: 10,
@@ -212,13 +210,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 5,
     marginBottom: 5,
+    borderRadius:5,
   },
   commentsContainer: {
-    backgroundColor: '#f9f9f9',
-    padding: 5,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  commentContainer: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#FF7D5C",
+    marginBottom: 10,
   },
   comment: {
-    fontSize: 14,
-    marginBottom: 5,
+    fontSize: 16,
   },
 });

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+//import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import YouTubeIframe from 'react-native-youtube-iframe';
 import * as Linking from 'expo-linking'
@@ -20,7 +19,7 @@ function Search() {
 
     const fetchResults = async () => {
         setIsLoading(true);
-        let modifiedQuery = query + 'mental health and self defense resources for women'
+        let modifiedQuery = query + 'resource for women'
 
         try {
             const response = await fetch(
@@ -53,7 +52,7 @@ function Search() {
         // Open the external URL in the device's default web browser only if result object is truthy
         if (result) { // Check if the link is not already opened
             Linking.openURL(result.formattedUrl);
-            // setIsLinkOpened(true); // Set isLinkOpened state to true after opening the link
+           
         }
     };
     return (
@@ -63,7 +62,7 @@ function Search() {
                     {videoIds.map(id => (
                         <View key={id}>
                             <YouTubeIframe
-                                apiKey='AIzaSyCmQSRBrYAfz4wNkQ-hQ6tWlMyxGtIAi9c'
+                                apiKey={YOUR_API_KEY}
                                 videoId={id}
                                 width={320}
                                 height={180}
@@ -73,7 +72,6 @@ function Search() {
                 </View>
                 <View style={styles.inputContainer}>
                     <View style={styles.searchInput}>
-                        <FontAwesomeIcon icon={faSearch} size={20} color="#ccc" />
                         <TextInput
                             style={{ flex: 1, marginLeft: 10 }}
                             placeholder="Search"
