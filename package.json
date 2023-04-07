@@ -39,7 +39,7 @@
     "lottie-react-native": "5.1.4",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.2",
-    "react-native": "0.71.4",
+    "react-native": "0.71.6",
     "react-native-elements": "^3.4.3",
     "react-native-google-places-autocomplete": "^2.5.1",
     "react-native-google-signin": "^2.1.1",
@@ -49,8 +49,6 @@
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.11",
-    
-    "undefined": "react-native-vector-icons/FontAwesome",
     "react-native-webview": "11.26.0",
     "react-native-youtube-iframe": "^2.2.2",
     "tailwind-react-native-classnames": "^1.5.1"

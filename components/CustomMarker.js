@@ -35,7 +35,7 @@ const CustomMarker = () => {
             const data = snapshot.docs.map((doc) => {
                 const post = doc.data();
 
-                if ("location" in post && "address" in post) {
+                if ("location" in post && "address" in post["location"]) {
                     // console.log("ADDRESS", address)
                     return {
                         location: post["location"],
@@ -131,7 +131,7 @@ const CustomMarker = () => {
                         <Marker
                             key={`${coordinate.lat}-${coordinate.lng}-${index}`}
                             coordinate={{ latitude: coordinate.lat, longitude: coordinate.lng }}
-                            title={coordinate.Address}
+                            title={coordinate.address}
 
                         />
                     );

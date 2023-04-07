@@ -23,7 +23,9 @@ export default function Addpost() {
   const [posts, setPosts] = useState([]);
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
+  const [location, setLocation] = useState({})
   const [newComment, setNewComment] = useState("");
+  const [address, setAddress] = useState("")
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
@@ -44,18 +46,22 @@ export default function Addpost() {
 
   function addPost() {
     if (!newPostTitle || !newPostBody) return;
-  
+
     const titleArray = newPostTitle.trim().split(/\s+/); // split title into words
+    location["address"] = address
     addDoc(collection(db, "posts"), {
       title: newPostTitle,
       titleArray: titleArray, // add title array to Firestore
       body: newPostBody,
+      location, location,
       createdAt: Timestamp.now(),
       comments: [],
     })
       .then(() => {
         setNewPostTitle("");
         setNewPostBody("");
+        setLocation({});
+        setAddress("")
       })
       .catch((error) => {
         console.error("Error adding post: ", error);
@@ -65,7 +71,7 @@ export default function Addpost() {
   return (
     <SafeAreaProvider>
       <ScrollView style={tw`bg-gray-50`}>
-      <View style={styles.container}>
+        <View style={styles.container}>
 
           <View style={styles.postContainer} >
             <View >
@@ -89,7 +95,7 @@ export default function Addpost() {
             </View>
 
             <View style={tw`mb-4`}>
-              <Text style={tw`text-lg font-bold text-gray-700 mb-2`}marginTop={10}>Content</Text>
+              <Text style={tw`text-lg font-bold text-gray-700 mb-2`} marginTop={10}>Content</Text>
               <TextInput
                 value={newPostBody}
                 onChangeText={setNewPostBody}
@@ -105,68 +111,70 @@ export default function Addpost() {
               />
             </View>
 
-            <View>
-              <Text style={tw`text-lg font-bold text-gray-700 mb-2`}> Location </Text>
-              <GooglePlacesAutocomplete
-                placeholder="Search"
-                onPress={(data, details = null) => {
-                  // 'details' is provided when fetchDetails = true
-                  console.log(data, details);
-                  setLocation(details.geometry.location);
-                }}
-                placeholderTextColor="#FFCDB9"
-              
-                fetchDetails={true}
-                query={{
-                  key: "AIzaSyD627hKqMDBrAMpyD2w204wfx0opjrKiUI",
-                  language: "en",
-                }}
-                styles={{
-                  container: {
-                    flex: 0,
-                  },
-                  textInputContainer: {
-                    width: "100%",
-                  },
-                  textInput: {
-                    height: 40,
-                    color: "#5d5d5d",
-                    fontSize: 16,
-                    backgroundColor: "#fff",
-                    borderRadius: 20,
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                    marginBottom: 10,
-                    borderWidth: 0.5,
-                    borderColor: "#ddd",
-                  },
-                  listView: {
-                    backgroundColor: "#fff",
-                    borderWidth: 0.5,
-                    borderColor: "#ddd",
-                    marginHorizontal: 20,
-                    elevation: 1,
-                    shadowColor: "#000",
-                    shadowOpacity: 0.1,
-                    shadowOffset: { width: 0, height: 0 },
-                    shadowRadius: 15,
-                    marginTop: 10,
-                  },
-                  description: {
-                    fontSize: 16,
-                  },
-                }}
-              />
-
-            </View>
-
           </View>
-        
-        <TouchableOpacity onPress={addPost} style={styles.postButton}>
-              <Text style={styles.postButtonText}>Post</Text>
-            </TouchableOpacity>
-            </View>
+
+          <TouchableOpacity onPress={addPost} style={styles.postButton}>
+            <Text style={styles.postButtonText}>Post</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
+      <View>
+        <Text style={tw`text-lg font-bold text-gray-700 mb-2`}> Location </Text>
+        <GooglePlacesAutocomplete
+          placeholder="Search"
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            // console.log(data, details);
+            setLocation(details.geometry.location);
+            setAddress(details.formatted_address)
+            console.log(address)
+            // setAddress(details.)
+          }}
+          placeholderTextColor="#FFCDB9"
+
+          fetchDetails={true}
+          query={{
+            key: "AIzaSyD627hKqMDBrAMpyD2w204wfx0opjrKiUI",
+            language: "en",
+          }}
+          styles={{
+            container: {
+              flex: 0,
+            },
+            textInputContainer: {
+              width: "100%",
+            },
+            textInput: {
+              height: 40,
+              color: "#5d5d5d",
+              fontSize: 16,
+              backgroundColor: "#fff",
+              borderRadius: 20,
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              marginBottom: 10,
+              borderWidth: 0.5,
+              borderColor: "#ddd",
+            },
+            listView: {
+              backgroundColor: "#fff",
+              borderWidth: 0.5,
+              borderColor: "#ddd",
+              marginHorizontal: 20,
+              elevation: 1,
+              shadowColor: "#000",
+              shadowOpacity: 0.1,
+              shadowOffset: { width: 0, height: 0 },
+              shadowRadius: 15,
+              marginTop: 10,
+            },
+            description: {
+              fontSize: 16,
+            },
+          }}
+        />
+
+      </View>
     </SafeAreaProvider>
   );
 }

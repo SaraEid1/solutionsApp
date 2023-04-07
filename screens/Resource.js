@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import YouTubeIframe from 'react-native-youtube-iframe';
+import * as Linking from 'expo-linking'
 
 function Search() {
     const YOUR_API_KEY = "AIzaSyAMupgR8rLSPwc1vIGpqT7kTRMQkOzDv74"
@@ -48,24 +49,13 @@ function Search() {
         fetchResults();
     };
 
-/*
-    const fetchVideos = async () => {
-        try {
-            const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?part=id&maxResults=2&q=self+defense|mental+health+for+women&type=video&videoDefinition=high&key=AIzaSyCmQSRBrYAfz4wNkQ-hQ6tWlMyxGtIAi9c`
-            );
-            if (response.ok) {
-                const data = await response.json();
-                const ids = data.items.map(item => item.id.videoId);
-                setVideoIds(ids);
-            }
-        } catch (error) {
-            console.error(error);
+    const handleTitlePress = (result) => {
+        // Open the external URL in the device's default web browser only if result object is truthy
+        if (result) { // Check if the link is not already opened
+            Linking.openURL(result.formattedUrl);
+            // setIsLinkOpened(true); // Set isLinkOpened state to true after opening the link
         }
     };
-
-    fetchVideos();
-*/
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -109,7 +99,9 @@ function Search() {
                             {results.map((result) => (
                                 <View key={result.cacheId} style={styles.result}>
                                     <Text style={styles.link}>{result.displayLink}</Text>
-                                    <Text style={styles.title}>{result.title}</Text>
+                                    <TouchableOpacity onPress={() => handleTitlePress(result)} >
+                                        <Text style={styles.title}>{result.title}</Text>
+                                    </TouchableOpacity>
                                     <Text style={styles.snippet}>{result.snippet}</Text>
                                 </View>
                             ))}
