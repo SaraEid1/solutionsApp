@@ -6,6 +6,7 @@ import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'rea
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import YouTubeIframe from 'react-native-youtube-iframe';
 import * as Linking from 'expo-linking'
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function Search() {
     const YOUR_API_KEY = "AIzaSyAMupgR8rLSPwc1vIGpqT7kTRMQkOzDv74"
@@ -56,6 +57,7 @@ function Search() {
         }
     };
     return (
+        <SafeAreaProvider>
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.videoContainer}>
@@ -126,7 +128,7 @@ function Search() {
 
 
         </ScrollView >
-
+        </SafeAreaProvider>
     );
 
 }
@@ -178,6 +180,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 10,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
