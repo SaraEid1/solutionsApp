@@ -16,8 +16,10 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import LottieView from "lottie-react-native";
+import { useNavigation } from "@react-navigation/core";
 
 const CustomMarker = () => {
+  const navigation = useNavigation();
   const [region, setRegion] = useState(null);
   const [data, setData] = useState([]);
   const initialRegion = {
@@ -29,28 +31,32 @@ const CustomMarker = () => {
   // const [selectedLocation, setSelectedLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [redirect, setRedirect] = useState(false);
-  const [redirectPosts, setRedirectPosts] = useState([]);
 
   const handleMarkerPress = async (address) => {
     console.log("inside");
-    try {
-        const postsRef = collection(db, 'posts');
-        const filterQuery = query(postsRef, where('location.address', '==', address));
-        const querySnapshot = await getDocs(filterQuery);
-        const posts = querySnapshot.docs.map((doc) => doc.data());
-    
-        // navigation.navigate('Feed', { posts });
-        
-      } catch (error) {
-        console.error('Error retrieving posts:', error);
-      }
-    };
-  if (redirect) {
-    // return (
-    //   <Redirect to={{ pathname: "/feed", state: { posts: redirectPosts } }} />
-    // );
-  }
+
+    navigation.navigate('Feed', {address});
+  };
+
+  //     try {
+  //       const postsRef = collection(db, "posts");
+  //       const filterQuery = query(
+  //         postsRef,
+  //         where("location.address", "==", address)
+  //       );
+  //       const querySnapshot = await getDocs(filterQuery);
+  //       const posts = querySnapshot.docs.map((doc) => doc.data());
+
+  //       // navigation.navigate('Feed', { posts });
+  //     } catch (error) {
+  //       console.error("Error retrieving posts:", error);
+  //     }
+  //   };
+  //   if (redirect) {
+  //     // return (
+  //     //   <Redirect to={{ pathname: "/feed", state: { posts: redirectPosts } }} />
+  //     // );
+  //   }
 
   // get location from firebase
   useEffect(() => {

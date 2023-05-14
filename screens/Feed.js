@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { SearchBar } from '@rneui/themed';
+import React, { useRef, useState, useEffect } from "react";
+import { SearchBar } from "@rneui/themed";
 //import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 //import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/core";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRoute, useNavigation } from "@react-navigation/core";
 
 import {
   View,
@@ -15,7 +15,7 @@ import {
   TextField,
   Button,
   ScrollView,
-  FlatList
+  FlatList,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { initializeApp } from "firebase/app";
@@ -31,7 +31,7 @@ import {
 import { db } from "../firebase";
 import { Timestamp } from "firebase/firestore";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import tw from "tailwind-react-native-classnames";
 
 export default function Feed() {
@@ -42,6 +42,9 @@ export default function Feed() {
   const [location, setLocation] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
+  const route = useRoute();
+  const { address } = route.params;
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
@@ -57,10 +60,25 @@ export default function Feed() {
         };
       });
       setPosts(data);
-    });
-    return () => unsubscribe();
-  }, []);
+      console.log("ADDRESS", address)
 
+      // scroll to post if address exists
+
+      if (address) {
+        console.log("address", address)
+        const filteredPost = data.find(
+          (post) => post.address === address
+        );
+        console.log("line 72")
+        if (filteredPost) {
+          const index = data.indexOf(filteredPost);
+          scrollRef.current.scrollToIndex({ index, animated: true });
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, [address]);
 
   function addComment(postId) {
     if (!newComment) return;
@@ -106,7 +124,6 @@ export default function Feed() {
       </View>
     );
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -120,17 +137,21 @@ export default function Feed() {
               onChangeText={setSearchQuery}
             />
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate ("New Post")} style={styles.newPostButton}>
-          <MaterialCommunityIcons
-          name="plus-circle-outline"
-          size={30}
-          color="#ffffff"
-        />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("New Post")}
+            style={styles.newPostButton}
+          >
+            <MaterialCommunityIcons
+              name="plus-circle-outline"
+              size={30}
+              color="#ffffff"
+            />
             <Text style={styles.newPostButtonText}>New Post</Text>
           </TouchableOpacity>
         </View>
       </View>
       <FlatList
+        ref={scrollRef}
         style={styles.postsContainer}
         data={filteredPosts}
         renderItem={renderItem}
@@ -140,61 +161,60 @@ export default function Feed() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
-  newPostButton:{
-    backgroundColor: '#FF7D5C',
+  newPostButton: {
+    backgroundColor: "#FF7D5C",
     borderRadius: 20,
     width: 296,
     height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
     paddingHorizontal: 10,
     marginBottom: 20,
     marginTop: 20,
   },
-  
+
   newPostButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
     marginLeft: 10,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   inputContainer: {
     marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   searchInput: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#ccc',
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderColor: "#ccc",
+    flexDirection: "row",
+    alignItems: "center",
   },
   postsContainer: {
     flex: 1,
   },
   postContainer: {
-    backgroundColor: '#FFF5F1',
+    backgroundColor: "#FFF5F1",
     borderRadius: 10,
-    borderWidth:1,
-  borderColor: '#FFCDB9',
+    borderWidth: 1,
+    borderColor: "#FFCDB9",
     padding: 10,
     marginBottom: 10,
   },
   postTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   postBody: {
@@ -203,14 +223,14 @@ const styles = StyleSheet.create({
   },
   postDate: {
     fontSize: 12,
-    color: '#888',
+    color: "#888",
     marginBottom: 10,
   },
   commentInput: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 5,
     marginBottom: 5,
-    borderRadius:5,
+    borderRadius: 5,
   },
   commentsContainer: {
     marginTop: 10,
