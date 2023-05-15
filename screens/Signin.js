@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection , getDocs, query, where} from "firebase/firestore";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 import {
@@ -34,7 +34,7 @@ function Signin() {
 
   const handleSignUp = () => {
     const encodedStudentId = encodeURIComponent(studentId);
-
+  
     if (studentId) {
       const profileDocRef = doc(db, "profiles", encodedStudentId);
       getDoc(profileDocRef)
@@ -43,23 +43,19 @@ function Signin() {
             console.log("Student ID already exists in database.");
             alert("Student ID is found. Please sign in.");
           } else {
-            setDoc(profileDocRef, {
-              studentId: studentId,
-            }, { merge: true })
-              .then(() => {
-                createUserWithEmailAndPassword(auth, email, password)
-                  .then((userCredentials) => {
-                    const user = userCredentials.user;
-                    console.log("Registered with:", user.email);
-                    setDoc(profileDocRef, {
-                      email: user.email,
-                    })
-                  })
+            createUserWithEmailAndPassword(auth, email, password)
+              .then((userCredentials) => {
+                const user = userCredentials.user;
+                console.log("Registered with:", user.email);
+                setDoc(profileDocRef, {
+                  studentId: studentId,
+                  email: user.email,
+                }, { merge: true })
                 console.log("Profile document created successfully");
                 navigation.replace("Home");
               })
               .catch((error) => {
-                console.error("Error adding profile document: ", error);
+                console.error("Error creating user: ", error);
               });
           }
         })
@@ -68,6 +64,7 @@ function Signin() {
         });
     }
   };
+  
 
   const handleLogin = () => {
     const encodedStudentId = encodeURIComponent(studentId);
@@ -80,7 +77,7 @@ function Signin() {
             signInWithEmailAndPassword(auth, email, password)
               .then((userCredentials) => {
                 const user = userCredentials.user;
-                console.log("Registered with:", user.email);
+                console.log("Signed in with:", user.email);
                 console.log("Student ID exists in database.");
                 navigation.replace("Home");
               })
@@ -100,7 +97,7 @@ function Signin() {
         console.error("Error getting profile document: ", error);
       });
   };
-
+  
 
 
   const [accessToken, setAccessToken] = React.useState();
@@ -115,10 +112,11 @@ function Signin() {
 
 
   const handleSignIn = async (email) => {
+    console.log("email", email)
     const profileDocRef = collection(db, "profiles");
     const querySnapshot = await getDocs(query(profileDocRef, where("email", "==", email)));
     console.log(querySnapshot.size)
-    console.log(email)
+    console.log("email", data.email)
     if (querySnapshot.size === 1) {
       // User is already associated with a student ID, so sign them in and navigate to the home screen
       const doc = querySnapshot.docs[0];
@@ -161,9 +159,19 @@ function Signin() {
     userInfoResponse.json().then(data => {
       setUserInfo(data);
       navigation.replace("Home");
+     // console.log ("data" , data);
+
+
 
     });
   }
+
+/*
+  React.useEffect(() => {
+    console.log("data", userInfo);
+  }, [userInfo]);
+  
+*/
 
   function showUserInfo(userInfo) {
     if (userInfo) {
