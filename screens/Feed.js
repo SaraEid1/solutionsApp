@@ -1,7 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import { SearchBar } from "@rneui/themed";
-//import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-//import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/core";
@@ -12,38 +10,28 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  TextField,
-  Button,
-  ScrollView,
   FlatList,
 } from "react-native";
-import { Icon } from "react-native-elements";
-import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
   collection,
   onSnapshot,
-  addDoc,
   doc,
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Timestamp } from "firebase/firestore";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import tw from "tailwind-react-native-classnames";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const [newPostBody, setNewPostBody] = useState("");
+  // const [newPostTitle, setNewPostTitle] = useState("");
+  // const [newPostBody, setNewPostBody] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [location, setLocation] = useState({});
+  // const [location, setLocation] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
   const route = useRoute();
-  const { address } = route.params;
+  const { address } = route.params || {};
   const scrollRef = useRef(null);
   const [scrollToIndex, setScrollToIndex] = useState(null);
 
@@ -68,13 +56,19 @@ export default function Feed() {
 
       if (address) {
         // console.log("address", address)
+        console.log("71")
         const filteredPost = data.find((post) => {
+          
           if ("location" in post) {
-            console.log(post.location.address);
+            console.log("line 74")
+            console.log(post.location);
+            console.log("line 76")
+
             return post.location.address === address;
           }
         });
         console.log("filteredPost ", filteredPost);
+
         if (filteredPost) {
           const index = data.indexOf(filteredPost);
           setScrollToIndex(index);
@@ -87,44 +81,6 @@ export default function Feed() {
     return () => unsubscribe();
   }, [address]);
 
-  // const calculateItemHeight = (index, posts) => {
-  //   let totalHeight = 0;
-
-  //   for (let i = 0; i < index; i++) {
-  //     const { body, comments } = posts[i];
-  //     const lines = Math.ceil((body.length + comments.length * 20) / 20);
-  //     const postHeight =
-  //       lines * 16 + // height for lines of body text
-  //       16 + // additional spacing between body and comments
-  //       comments.length * 16 + // height for comments
-  //       16 + // additional spacing between comments and title
-  //       20 + // height for title
-  //       20; // additional spacing
-  //     totalHeight += postHeight;
-  //   }
-
-  //   const lastPost = posts[index];
-  //   if (lastPost) {
-  //     const { body, comments } = lastPost;
-  //     const lines = Math.ceil((body.length + comments.length * 20) / 20);
-  //     const lastPostHeight =
-  //       lines * 16 + // height for lines of body text
-  //       16 + // additional spacing between body and comments
-  //       comments.length * 16 + // height for comments
-  //       16 + // additional spacing between comments and title
-  //       20 + // height for title
-  //       20; // additional spacing // Adjust font size, line height, and additional spacing as needed
-  //     totalHeight += lastPostHeight;
-  //   }
-
-  //   return totalHeight;
-  // };
-
-  // const getItemLayout = (_, index) => {
-  //   const offset = calculateItemHeight(index, filteredPosts);
-  //   const length = calculateItemHeight(index + 1, filteredPosts) - offset;
-  //   return { length, offset, index };
-  // };
 
   const getItemLayout = (_, index) => {
     const post = filteredPosts[index]
