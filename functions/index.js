@@ -1,21 +1,29 @@
+/* eslint-disable */
+
+
 const functions = require("firebase-functions");
-
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
 const admin = require("firebase-admin");
 
 admin.initializeApp();
 
-exports.createProfile = functions.auth.user().onCreate((user) => {
-  // Add a new document to the "profiles" collection
-  return admin.firestore().collection("profiles").doc(user.uid).set({
-    email: user.email,
-    // add any other fields you want to save for the user
+exports.sendNotification = functions.firestore
+  .document("posts/{postId}")
+  .onCreate(async (snapshot) => {
+    const post = snapshot.data();
+    const { title, body } = post;
+
+    // Get the FCM tokens of all users
+    const tokensSnapshot = await admin.firestore().collection("users").get();
+    const tokens = tokensSnapshot.docs.map((doc) => doc.data().fcmToken);
+
+    // Construct the notification payload
+    const payload = {
+      notification: {
+        title: "New Post",
+        body: `${title}: ${body}`,
+      },
+    };
+
+    // Send the notification to all users
+    await admin.messaging().sendToDevice(tokens, payload);
   });
-});

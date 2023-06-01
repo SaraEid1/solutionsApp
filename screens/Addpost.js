@@ -8,28 +8,27 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import {
-  collection,
-  onSnapshot,
-  addDoc,
-} from "firebase/firestore";
-import { db } from "../firebase";
+import { collection, onSnapshot, addDoc } from "firebase/firestore";
+import { db, sendNotification } from "../firebase";
 import { Timestamp } from "firebase/firestore";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import tw from 'tailwind-react-native-classnames';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { KeyboardAvoidingView } from 'react-native';
+import tw from "tailwind-react-native-classnames";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function Addpost() {
   const [posts, setPosts] = useState([]);
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
-  const [location, setLocation] = useState({})
+  const [location, setLocation] = useState({});
   const [newComment, setNewComment] = useState("");
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState("");
   const [showLocation, setShowLocation] = useState(false);
 
   useEffect(() => {
+    // console.log("printing firebase function obj?");
+
+    // console.log(functions);
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
       const data = snapshot.docs.map((doc) => {
         const post = doc.data();
@@ -46,16 +45,36 @@ export default function Addpost() {
     return () => unsubscribe();
   }, []);
 
+  async function sendNotificationIfKeywordExists(post) {
+    // const sendNotification = functions.httpsCallable("sendNotification");
+
+    const keywords = ["emergency", "urgent"];
+    const keywordExists = keywords.some((keyword) => {
+      // Check if any of the keywords exist in the post
+      return post.body.includes(keyword);
+    });
+
+    if (keywordExists) {
+      try {
+        const result = await sendNotification({ post });
+        console.log("Notification sent successfully:", result);
+      } catch (error) {
+        console.error("Error sending notification:", error);
+      }
+    }
+  }
+
   function addPost() {
     if (!newPostTitle || !newPostBody) return;
 
     const titleArray = newPostTitle.trim().split(/\s+/); // split title into words
-    location["address"] = address
+    location["address"] = address;
     addDoc(collection(db, "posts"), {
       title: newPostTitle,
       titleArray: titleArray, // add title array to Firestore
       body: newPostBody,
-      location, location,
+      location,
+      location,
       createdAt: Timestamp.now(),
       comments: [],
     })
@@ -63,7 +82,12 @@ export default function Addpost() {
         setNewPostTitle("");
         setNewPostBody("");
         setLocation({});
-        setAddress("")
+        setAddress("");
+
+        sendNotificationIfKeywordExists({
+          title: newPostTitle,
+          body: newPostBody,
+        });
       })
       .catch((error) => {
         console.error("Error adding post: ", error);
@@ -75,14 +99,12 @@ export default function Addpost() {
       <ScrollView style={tw`bg-gray-50`} scrollEnabled={!showLocation}>
         {!showLocation && (
           <View style={styles.container}>
-
-            <View style={styles.postContainer} >
-
-
-
-              <View >
-                <View >
-                  <Text style={tw`text-lg font-bold text-gray-700 mb-2`}>Title</Text>
+            <View style={styles.postContainer}>
+              <View>
+                <View>
+                  <Text style={tw`text-lg font-bold text-gray-700 mb-2`}>
+                    Title
+                  </Text>
                   <TextInput
                     value={newPostTitle}
                     onChangeText={setNewPostTitle}
@@ -98,11 +120,15 @@ export default function Addpost() {
                       this.secondTextInput.focus();
                     }}
                   />
-
                 </View>
 
                 <View style={tw`mb-4`}>
-                  <Text style={tw`text-lg font-bold text-gray-700 mb-2`} marginTop={10}>Content</Text>
+                  <Text
+                    style={tw`text-lg font-bold text-gray-700 mb-2`}
+                    marginTop={10}
+                  >
+                    Content
+                  </Text>
                   <TextInput
                     value={newPostBody}
                     onChangeText={setNewPostBody}
@@ -116,37 +142,40 @@ export default function Addpost() {
                       this.secondTextInput = input;
                     }}
                   />
-
                 </View>
-
               </View>
-
             </View>
-            <TouchableOpacity onPress={() => {
-              setShowLocation(true);
-            }}
-              style={[styles.postButton, showLocation ? styles.postButton1 : null]}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowLocation(true);
+              }}
+              style={[
+                styles.postButton,
+                showLocation ? styles.postButton1 : null,
+              ]}
+            >
               <Text style={styles.postButtonText}>
-                {showLocation ? 'Post' : 'Next'}
+                {showLocation ? "Post" : "Next"}
               </Text>
             </TouchableOpacity>
           </View>
         )}
       </ScrollView>
       {showLocation && (
-
         <View style={styles.container}>
-          <View style={styles.postContainer1} >
-            <Text style={tw`text-lg font-bold text-gray-700 mb-2`}> Location </Text>
+          <View style={styles.postContainer1}>
+            <Text style={tw`text-lg font-bold text-gray-700 mb-2`}>
+              {" "}
+              Location{" "}
+            </Text>
             <GooglePlacesAutocomplete
               placeholder="Search"
               onPress={(data, details = null) => {
                 setLocation(details.geometry.location);
-                setAddress(details.formatted_address)
-                console.log(address)
+                setAddress(details.formatted_address);
+                console.log(address);
               }}
               placeholderTextColor="#FFCDB9"
-
               fetchDetails={true}
               query={{
                 key: "AIzaSyD627hKqMDBrAMpyD2w204wfx0opjrKiUI",
@@ -188,124 +217,115 @@ export default function Addpost() {
                 },
               }}
             />
-
-
           </View>
           <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={() => {
-            setShowLocation(false);
-          }}
-            style={styles.postButton2}>
-            <Text style={styles.postButtonText}>
-              Back
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-            addPost();
-            setShowLocation(false);
-          }}
-            style={styles.postButton1}>
-            <Text style={styles.postButtonText}>
-              Post
-            </Text>
-          </TouchableOpacity>
-
-
-
-        </View>
+            <TouchableOpacity
+              onPress={() => {
+                setShowLocation(false);
+              }}
+              style={styles.postButton2}
+            >
+              <Text style={styles.postButtonText}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                addPost();
+                setShowLocation(false);
+              }}
+              style={styles.postButton1}
+            >
+              <Text style={styles.postButtonText}>Post</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
-
     </SafeAreaProvider>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
   },
   postContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#FFF5F1',
+    backgroundColor: "#FFF5F1",
     borderWidth: 1,
-    borderColor: '#FFCDB9',
+    borderColor: "#FFCDB9",
     width: 340,
     borderRadius: 15,
-    alignSelf: 'center', // centers the container horizontally
-    justifyContent: 'center', // centers the container vertically
-    marginTop: '20%', // moves the container down by 50% of the screen height
+    alignSelf: "center", // centers the container horizontally
+    justifyContent: "center", // centers the container vertically
+    marginTop: "20%", // moves the container down by 50% of the screen height
   },
   postContainer1: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#FFF5F1',
+    backgroundColor: "#FFF5F1",
     borderWidth: 1,
-    borderColor: '#FFCDB9',
+    borderColor: "#FFCDB9",
     width: 340,
     borderRadius: 15,
-    alignSelf: 'center',
-    justifyContent: 'center',
+    alignSelf: "center",
+    justifyContent: "center",
     bottom: 0,
     marginBottom: 140,
-    position: 'absolute',
+    position: "absolute",
     height: 240,
   },
   postButton: {
-    backgroundColor: '#FF7D5C',
+    backgroundColor: "#FF7D5C",
     borderRadius: 20,
     width: 150,
     height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
     paddingHorizontal: 10,
     marginBottom: 20,
     marginTop: 20,
-    alignSelf: 'flex-end', // aligns the button to the right
+    alignSelf: "flex-end", // aligns the button to the right
   },
 
   postButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
     marginLeft: 10,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
 
   postButton1: {
-    backgroundColor: '#FF7D5C',
+    backgroundColor: "#FF7D5C",
     borderRadius: 20,
     width: 150,
     height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
     paddingHorizontal: 10,
     marginBottom: 70,
-    alignSelf: 'flex-end', // aligns the button to the right
+    alignSelf: "flex-end", // aligns the button to the right
     marginLeft: 25,
-
   },
   postButton2: {
-    backgroundColor: '#FF7D5C',
+    backgroundColor: "#FF7D5C",
     borderRadius: 20,
     width: 150,
     height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
     paddingHorizontal: 10,
     marginBottom: 70,
-    alignSelf: 'flex-start', // aligns the button to the right
+    alignSelf: "flex-start", // aligns the button to the right
     marginRight: 25,
   },
   buttonContainer: {
     flexDirection: "row",
-
   },
 });
