@@ -16,10 +16,12 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithPopup,
 } from "firebase/auth";
+import LottieView from 'lottie-react-native'
 
 const logo = require('../assets/google.png');
+const empowerher = require('../assets/empowerher.png');
+
 import { db } from "../firebase";
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
@@ -52,7 +54,8 @@ function Signin() {
                   email: user.email,
                 }, { merge: true })
                 console.log("Profile document created successfully");
-                navigation.replace("Home");
+                //navigation.replace("Home");
+                navigation.replace("Splash");
               })
               .catch((error) => {
                 console.error("Error creating user: ", error);
@@ -159,19 +162,12 @@ function Signin() {
     userInfoResponse.json().then(data => {
       setUserInfo(data);
       navigation.replace("Home");
-     // console.log ("data" , data);
 
 
 
     });
   }
 
-/*
-  React.useEffect(() => {
-    console.log("data", userInfo);
-  }, [userInfo]);
-  
-*/
 
   function showUserInfo(userInfo) {
     if (userInfo) {
@@ -323,7 +319,7 @@ const styles = StyleSheet.create({
 
   welcome:{
     fontWeight: "bold",
-    fontSize: 32,
+    fontSize: 40,
     marginBottom: 30,
     color:"#FF4010",
   }

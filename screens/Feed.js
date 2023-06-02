@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { SearchBar } from '@rneui/themed';
-//import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-//import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import React, { useRef, useState, useEffect } from "react";
+import { SearchBar } from "@rneui/themed";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/core";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRoute, useNavigation } from "@react-navigation/core";
 
 import {
   View,
@@ -12,42 +10,32 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  TextField,
-  Button,
-  ScrollView,
-  FlatList
+  FlatList,
 } from "react-native";
-import { Icon } from "react-native-elements";
-import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
   collection,
   onSnapshot,
-  addDoc,
   doc,
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Timestamp } from "firebase/firestore";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import tw from "tailwind-react-native-classnames";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
-  const [newPostTitle, setNewPostTitle] = useState("");
-  const [newPostBody, setNewPostBody] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [location, setLocation] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
+  const route = useRoute();
+  const { address } = route.params || {};
+  const scrollRef = useRef(null);
+  const [scrollToIndex, setScrollToIndex] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "posts"), (snapshot) => {
       const data = snapshot.docs.map((doc) => {
         const post = doc.data();
-        // Convert createdAt to a Firestore timestamp if it's not already
         if (!(post.createdAt instanceof Timestamp)) {
           post.createdAt = Timestamp.fromDate(new Date(post.createdAt));
         }
@@ -57,10 +45,33 @@ export default function Feed() {
         };
       });
       setPosts(data);
-    });
-    return () => unsubscribe();
-  }, []);
 
+      if (address) {
+        const filteredPost = data.find((post) => {
+          if ("location" in post) {
+            return post.location.address === address;
+          }
+        });
+
+        if (filteredPost) {
+          const index = data.indexOf(filteredPost);
+          setScrollToIndex(index);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, [address]);
+
+  const getItemLayout = (_, index) => {
+    const post = filteredPosts[index];
+    const bodyHeight = post.body ? post.body.split(" ").length * 4 : 0;
+    return {
+      length: bodyHeight,
+      offset: 400 * index * 1.25,
+      index,
+    };
+  };
 
   function addComment(postId) {
     if (!newComment) return;
@@ -70,7 +81,6 @@ export default function Feed() {
       .then(() => {
         console.log("Comment added successfully!");
         setNewComment("");
-        // setLocation("")
       })
       .catch((error) => {
         console.error("Error adding comment: ", error);
@@ -106,125 +116,131 @@ export default function Feed() {
       </View>
     );
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <View style={styles.inputContainer}>
-          <View style={styles.searchInput}>
-            <TextInput
-              style={{ flex: 1, marginLeft: 10 }}
-              placeholder="Search..."
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate ("New Post")} style={styles.newPostButton}>
-          <MaterialCommunityIcons
-          name="plus-circle-outline"
-          size={30}
-          color="#ffffff"
-        />
-            <Text style={styles.newPostButtonText}>New Post</Text>
-          </TouchableOpacity>
+      <View style={styles.header}>
+        <View style={styles.searchInput}>
+          <TextInput
+            style={styles.searchInputText}
+            placeholder="Search..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
         </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("New Post")}
+          style={styles.newPostButton}
+        >
+          <MaterialCommunityIcons
+            name="plus-circle-outline"
+            size={24}
+            color="#ffffff"
+          />
+          <Text style={styles.newPostButtonText}>New Post</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
+        ref={scrollRef}
         style={styles.postsContainer}
         data={filteredPosts}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
+        getItemLayout={getItemLayout}
+        initialScrollIndex={scrollToIndex}
       />
     </SafeAreaView>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#FFF",
     padding: 20,
   },
-  newPostButton:{
-    backgroundColor: '#FF7D5C',
-    borderRadius: 20,
-    width: 296,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    marginTop: 20,
-  },
-  
-  newPostButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    marginLeft: 10,
-    fontWeight: 'bold'
-  },
-  inputContainer: {
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   searchInput: {
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: "#F0F0F0",
+    borderRadius: 10,
     padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    flexDirection: 'row',
-    alignItems: 'center',
+  },
+  searchInputText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  newPostButton: {
+    backgroundColor: "#FF7D5C",
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 10,
+  },
+  newPostButtonText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 5,
   },
   postsContainer: {
     flex: 1,
   },
   postContainer: {
-    backgroundColor: '#FFF5F1',
+    backgroundColor: "#FFF5F1",
     borderRadius: 10,
-    borderWidth:1,
-  borderColor: '#FFCDB9',
-    padding: 10,
+    borderWidth: 1,
+    borderColor: "#FFCDB9",
+    padding: 20,
     marginBottom: 10,
   },
   postTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: 21,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#333",
   },
   postBody: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    marginBottom: 15,
+    color: "#666",
   },
   postDate: {
     fontSize: 12,
-    color: '#888',
+    color: "#888",
     marginBottom: 10,
   },
   commentInput: {
-    backgroundColor: '#fff',
-    padding: 5,
-    marginBottom: 5,
-    borderRadius:5,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    fontSize: 16,
+    color: "#333",
   },
   commentsContainer: {
     marginTop: 10,
     marginBottom: 20,
   },
   commentContainer: {
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#FFF",
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: "#FF7D5C",
+    padding: 10,
     marginBottom: 10,
   },
   comment: {
-    fontSize: 16,
+    fontSize: 17,
+    color: "#333",
+    fontFamily: 'Roboto',
   },
 });

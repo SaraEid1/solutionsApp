@@ -1,12 +1,12 @@
 import React from "react";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import HomeScreen from "../screens/Homescreen";
-import Feed from "../screens/Feed";
-import CustomMarker from "./CustomMarker";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
+
+import HomeScreen from "../screens/Homescreen";
+import Feed from "../screens/Feed";
+import CustomMarker from "./CustomMarker";
 import Map from '../screens/Map';
 import Addpost from '../screens/Addpost';
 import Resources from '../screens/Resource';
@@ -15,47 +15,39 @@ const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
   const screenOptions = ({ route }) => ({
-    tabBarIcon: ({ focused }) => {
+    tabBarIcon: ({ focused, color, size }) => {
       let iconName;
 
       switch (route.name) {
         case 'HomeScreen':
-          iconName = 'home';
+          iconName = focused ? 'home' : 'home-outline';
           break;
         case 'Community Posts':
-          iconName = 'post';
+          iconName = focused ? 'post' : 'post-outline';
           break;
         case 'New Post':
-          iconName = 'note-plus-outline';
+          iconName = focused ? 'note-plus' : 'note-plus-outline';
           break;
         case 'Map':
-          iconName = 'map-search';
+          iconName = focused ? 'map-search' : 'map-search-outline';
           break;
         case 'Resources':
-          iconName = 'link-box-variant-outline';
+          iconName = focused ? 'link-box-variant' : 'link-box-variant-outline';
           break;
         default:
-          iconName = 'home';
+          iconName = 'home-outline';
           break;
       }
 
       return (
         <MaterialCommunityIcons
           name={iconName}
-          color={focused ? '#FF7D5C' : '#7A7A7A'}
-          size={focused ? 40 : 26}
+          color={color}
+          size={32}
+          style={styles.tabIcon}
         />
       );
     },
-    
-    headerStyle: {
-    },
-    headerTitleStyle: {
-      fontSize: 32,
-      fontWeight: 'semibold',
-      marginTop: 18,
-    },
-    headerTitleAlign: "center",
   });
 
   return (
@@ -63,13 +55,15 @@ const BottomNavigator = () => {
       <Tab.Navigator
         tabBarOptions={{
           style: styles.tabBarStyle,
-          showLabel: false
+          activeTintColor: '#FF5050',
+          inactiveTintColor: '#848181',
+          showLabel: false,
         }}
         initialRouteName="HomeScreen"
         screenOptions={screenOptions}
       >
         <Tab.Screen
-          name=" "
+          name="HomeScreen"
           component={HomeScreen}
           options={{
             headerShown: false,
@@ -78,16 +72,8 @@ const BottomNavigator = () => {
         <Tab.Screen
           name="Community Posts"
           component={Feed}
-          
           options={{
-            headerStyle: {
-            },
-            headerTitleStyle: {
-              fontSize: 32,
-              fontWeight: 'semibold',
-              marginTop: 18,
-            },
-            headerTitleAlign: "center",
+            headerShown: false,
           }}
         />
 
@@ -95,14 +81,7 @@ const BottomNavigator = () => {
           name="New Post"
           component={Addpost}
           options={{
-            headerStyle: {
-            },
-            headerTitleStyle: {
-              fontSize: 32,
-              fontWeight: 'semibold',
-              marginTop: 18,
-            },
-            headerTitleAlign: "center",
+            headerShown: false,
           }}
         />
 
@@ -110,32 +89,15 @@ const BottomNavigator = () => {
           name="Map"
           component={CustomMarker}
           options={{
-            headerStyle: {
-            },
-            headerTitleStyle: {
-              fontSize: 32,
-              fontWeight: 'semibold',
-              marginTop: 18,
-              
-            },
-            headerTitleAlign: "center",
+            headerShown: false,
           }}
         />
-
-
 
         <Tab.Screen
           name="Resources"
           component={Resources}
           options={{
-            headerStyle: {
-            },
-            headerTitleStyle: {
-              fontSize: 32,
-              fontWeight: 'semibold',
-              marginTop: 20,
-            },
-            headerTitleAlign: "center",
+            headerShown: false,
           }}
         />
       </Tab.Navigator>
@@ -146,11 +108,16 @@ const BottomNavigator = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FAFAFA',
   },
   tabBarStyle: {
-    backgroundColor: '#000000',
-  }
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 0,
+    elevation: 8,
+  },
+  tabIcon: {
+    marginBottom: -5, // Adjust as needed
+  },
 });
 
 export default BottomNavigator;
