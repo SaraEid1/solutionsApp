@@ -1,0 +1,331 @@
+[debug] [2023-06-02T19:58:34.363Z] ----------------------------------------------------------------------
+[debug] [2023-06-02T19:58:34.365Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2023-06-02T19:58:34.366Z] CLI Version:   12.3.0
+[debug] [2023-06-02T19:58:34.366Z] Platform:      win32
+[debug] [2023-06-02T19:58:34.366Z] Node Version:  v18.16.0
+[debug] [2023-06-02T19:58:34.367Z] Time:          Fri Jun 02 2023 12:58:34 GMT-0700 (Pacific Daylight Time)
+[debug] [2023-06-02T19:58:34.367Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-06-02T19:58:34.490Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-06-02T19:58:34.490Z] > authorizing via signed-in user (kjiang1990@gmail.com)
+[debug] [2023-06-02T19:58:34.491Z] [iam] checking project solutionsapp-55198 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-06-02T19:58:34.492Z] > refreshing access token with scopes: []
+[debug] [2023-06-02T19:58:34.494Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-06-02T19:58:34.495Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-06-02T19:58:34.689Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-06-02T19:58:34.689Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-06-02T19:58:34.711Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/solutionsapp-55198:testIamPermissions [none]
+[debug] [2023-06-02T19:58:34.711Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/solutionsapp-55198:testIamPermissions x-goog-quota-user=projects/solutionsapp-55198
+[debug] [2023-06-02T19:58:34.711Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/solutionsapp-55198:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-06-02T19:58:34.824Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/solutionsapp-55198:testIamPermissions 200
+[debug] [2023-06-02T19:58:34.825Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/solutionsapp-55198:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-06-02T19:58:34.825Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/solutionsapp-55198/serviceAccounts/solutionsapp-55198@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-06-02T19:58:34.825Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/solutionsapp-55198/serviceAccounts/solutionsapp-55198@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-06-02T19:58:34.926Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/solutionsapp-55198/serviceAccounts/solutionsapp-55198@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-06-02T19:58:34.926Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/solutionsapp-55198/serviceAccounts/solutionsapp-55198@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'solutionsapp-55198'...
+[info] 
+[info] i  deploying functions 
+[info] +  functions: Finished running predeploy script. 
+[debug] [2023-06-02T19:58:34.933Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198 [none]
+[debug] [2023-06-02T19:58:35.131Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198 200
+[debug] [2023-06-02T19:58:35.131Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198 {"projectId":"solutionsapp-55198","projectNumber":"140130769187","displayName":"solutionsApp","name":"projects/solutionsapp-55198","resources":{"hostingSite":"solutionsapp-55198"},"state":"ACTIVE","etag":"1_0664596c-9782-43cb-a482-4ea64b8d0998"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-06-02T19:58:35.134Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-06-02T19:58:35.135Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/solutionsapp-55198
+[debug] [2023-06-02T19:58:35.136Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-06-02T19:58:35.136Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/solutionsapp-55198
+[debug] [2023-06-02T19:58:35.138Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudbuild.googleapis.com [none]
+[debug] [2023-06-02T19:58:35.138Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudbuild.googleapis.com x-goog-quota-user=projects/solutionsapp-55198
+[debug] [2023-06-02T19:58:35.139Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/artifactregistry.googleapis.com [none]
+[debug] [2023-06-02T19:58:35.139Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/artifactregistry.googleapis.com x-goog-quota-user=projects/solutionsapp-55198
+[debug] [2023-06-02T19:58:35.649Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/artifactregistry.googleapis.com 200
+[debug] [2023-06-02T19:58:35.649Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-06-02T19:58:35.666Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudbuild.googleapis.com 200
+[debug] [2023-06-02T19:58:35.666Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-06-02T19:58:35.668Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudfunctions.googleapis.com 200
+[debug] [2023-06-02T19:58:35.668Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-06-02T19:58:35.673Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/runtimeconfig.googleapis.com 200
+[debug] [2023-06-02T19:58:35.673Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/solutionsapp-55198/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-06-02T19:58:35.674Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198/adminSdkConfig [none]
+[debug] [2023-06-02T19:58:35.849Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198/adminSdkConfig 200
+[debug] [2023-06-02T19:58:35.849Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198/adminSdkConfig {"projectId":"solutionsapp-55198","storageBucket":"solutionsapp-55198.appspot.com"}
+[debug] [2023-06-02T19:58:35.850Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/solutionsapp-55198/configs [none]
+[debug] [2023-06-02T19:58:36.008Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/solutionsapp-55198/configs 200
+[debug] [2023-06-02T19:58:36.009Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/solutionsapp-55198/configs {}
+[debug] [2023-06-02T19:58:36.012Z] Validating nodejs source
+[debug] [2023-06-02T19:58:46.068Z] checkFunctionsSDKVersion was unable to fetch information from NPM Error: spawnSync C:\WINDOWS\system32\cmd.exe ETIMEDOUT
+    at Object.spawnSync (node:internal/child_process:1110:20)
+    at Object.spawnSync (node:child_process:871:24)
+    at Function.spawnSync [as sync] (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\index.js:26:23)
+    at Object.getLatestSDKVersion (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\runtimes\node\versioning.js:55:25)
+    at Object.checkFunctionsSDKVersion (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\runtimes\node\versioning.js:76:32)
+    at Delegate.validate (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\runtimes\node\index.js:84:20)
+    at loadCodebases (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\prepare.js:300:31)
+    at async prepare (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\prepare.js:58:24)
+    at async chain (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:38:9)
+    at async deploy (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:95:5)
+[debug] [2023-06-02T19:58:46.069Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1",
+    "axios": "^0.24.0",
+    "p-locate": "^4.1.0",
+    "semver": "^6.3.0",
+    "braces": "^3.0.2",
+    "fill-range": "^7.0.1",
+    "to-regex-range": "^5.0.1",
+    "mimic-fn": "^2.1.0",
+    "p-limit": "^2.3.0",
+    "error-ex": "^1.3.2",
+    "json-parse-even-better-errors": "^2.3.1",
+    "lines-and-columns": "^1.2.4",
+    "is-arrayish": "^0.2.1",
+    "ansi-styles": "^5.2.0",
+    "react-is": "^18.2.0",
+    "kleur": "^3.0.3",
+    "sisteransi": "^1.0.5",
+    "is-core-module": "^2.12.1",
+    "path-parse": "^1.0.7",
+    "supports-preserve-symlinks-flag": "^1.0.0",
+    "shebang-regex": "^3.0.0",
+    "buffer-from": "^1.1.2",
+    "escape-string-regexp": "^2.0.0",
+    "char-regex": "^1.0.2",
+    "glob": "^7.2.3",
+    "is-number": "^7.0.0",
+    "picocolors": "^1.0.0",
+    "convert-source-map": "^1.9.0",
+    "makeerror": "^1.0.12",
+    "tmpl": "^1.0.5",
+    "isexe": "^2.0.0",
+    "imurmurhash": "^0.1.4",
+    "yallist": "^3.1.1",
+    "supports-color": "^5.5.0",
+    "color-convert": "^1.9.3",
+    "color-name": "^1.1.3",
+    "has-flag": "^3.0.0",
+    "sprintf-js": "^1.0.3",
+    "p-try": "^2.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2023-06-02T19:58:46.070Z] Building nodejs source
+[debug] [2023-06-02T19:58:46.071Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-06-02T19:58:46.096Z] Found firebase-functions binary at 'C:\Users\YJIAN\Projects2\solutionsApp\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-06-02T19:58:49.235Z] Serving at port 8293
+
+[debug] [2023-06-02T19:58:55.090Z] ping recieved
+
+[debug] [2023-06-02T19:58:55.103Z] Got response from /__/functions.yaml {"endpoints":{"sendNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","eventFilters":{"resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"retry":false},"labels":{},"entryPoint":"sendNotification"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-06-02T19:58:55.118Z] shutdown requested via /__/quitquitquit
+
+[info] i  functions: preparing ./functions directory for uploading... 
+[info] i  functions: packaged C:\Users\YJIAN\Projects2\solutionsApp\functions (39.64 KB) for uploading 
+[debug] [2023-06-02T19:58:55.243Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/-/functions [none]
+[debug] [2023-06-02T19:58:55.739Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/-/functions 200
+[debug] [2023-06-02T19:58:55.739Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/-/functions {}
+[debug] [2023-06-02T19:58:55.741Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/solutionsapp-55198/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2023-06-02T19:58:56.703Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/solutionsapp-55198/locations/-/functions 200
+[debug] [2023-06-02T19:58:56.703Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/solutionsapp-55198/locations/-/functions {}
+[debug] [2023-06-02T19:58:56.718Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198 [none]
+[debug] [2023-06-02T19:58:56.916Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198 200
+[debug] [2023-06-02T19:58:56.916Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/solutionsapp-55198 {"projectId":"solutionsapp-55198","projectNumber":"140130769187","displayName":"solutionsApp","name":"projects/solutionsapp-55198","resources":{"hostingSite":"solutionsapp-55198"},"state":"ACTIVE","etag":"1_0664596c-9782-43cb-a482-4ea64b8d0998"}
+[debug] [2023-06-02T19:58:56.917Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2023-06-02T19:58:56.917Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions:generateUploadUrl {}
+[debug] [2023-06-02T19:58:58.137Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2023-06-02T19:58:58.137Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D"}
+[debug] [2023-06-02T19:58:58.139Z] >>> [apiv2][query] PUT https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip GoogleAccessId=service-140130769187%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D
+[debug] [2023-06-02T19:58:58.139Z] >>> [apiv2][body] PUT https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip [stream]
+[debug] [2023-06-02T19:58:58.502Z] <<< [apiv2][status] PUT https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip 200
+[debug] [2023-06-02T19:58:58.502Z] <<< [apiv2][body] PUT https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip [omitted]
+[info] +  functions: ./functions folder uploaded successfully 
+[info] i  functions: creating Node.js 18 (1st Gen) function sendNotification(us-central1)... 
+[debug] [2023-06-02T19:58:58.508Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions [none]
+[debug] [2023-06-02T19:58:58.508Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions {"name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","entryPoint":"sendNotification","runtime":"nodejs18","dockerRegistry":"ARTIFACT_REGISTRY","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"minInstances":null,"maxInstances":null,"ingressSettings":null,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"serviceAccountEmail":null,"availableMemoryMb":null,"timeout":null,"vpcConnector":null,"vpcConnectorEgressSettings":null,"buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}}
+[debug] [2023-06-02T19:58:59.060Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions 200
+[debug] [2023-06-02T19:58:59.060Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/solutionsapp-55198/locations/us-central1/functions {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z"}}
+[debug] [2023-06-02T19:58:59.061Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:58:59.282Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:58:59.282Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z"}}
+[debug] [2023-06-02T19:58:59.787Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:58:59.787Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:58:59.995Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:58:59.996Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"}}
+[debug] [2023-06-02T19:59:01.003Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:59:01.003Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:59:01.225Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:59:01.225Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"}}
+[debug] [2023-06-02T19:59:03.236Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:59:03.236Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:59:03.448Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:59:03.448Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"}}
+[debug] [2023-06-02T19:59:07.453Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:59:07.453Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:59:07.664Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:59:07.664Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"}}
+[debug] [2023-06-02T19:59:15.674Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:59:15.674Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:59:15.860Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:59:15.861Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"}}
+[debug] [2023-06-02T19:59:25.871Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:59:25.872Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:59:26.058Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:59:26.058Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:00Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"}}
+[debug] [2023-06-02T19:59:36.066Z] [create-default-us-central1-sendNotification] Retrying task index 0
+[debug] [2023-06-02T19:59:36.066Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM [none]
+[debug] [2023-06-02T19:59:36.235Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM 200
+[debug] [2023-06-02T19:59:36.235Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM {"name":"operations/c29sdXRpb25zYXBwLTU1MTk4L3VzLWNlbnRyYWwxL3NlbmROb3RpZmljYXRpb24vQmpjYTVwZklSLWM","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v1.OperationMetadataV1","target":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","type":"CREATE_FUNCTION","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.CloudFunction","name":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification","eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","resource":"projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"},"entryPoint":"sendNotification","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"765ae56110edad53e24044aa650543a0320b65e8"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-314849732836.us-central1.cloudfunctions.appspot.com/274d56a4-c4ac-4651-96db-31bf14ddfe38.zip?GoogleAccessId=service-140130769187@gcf-admin-robot.iam.gserviceaccount.com&Expires=1685737739&Signature=hpyYZcKBOUduy8Qji7fR9PfveB%2BINGJPddgkz7s8jeduuxJ9dXo9AzcxfEX06zkf6Y1jymEfcwCA4D2s4sEf2Rpq7lOazhoPI%2FNZLhLxVVl9PfG1mv8JW%2FBX%2BHUkgtqAI5jkPh9C143ACegkzqUEphLWigzTZfLyDdmxPFlsvHYC9cJft74eKtFJfgD%2Bi%2FKz69YaeC2swzy1XYeXoG%2BLW3Xw8n0H7nAcN89k6QIKF9fJxo%2FxsKAP2CNlq%2BP4tdNLtMzOxkcsIsokYXOJjyyXxZ3AMFxRkIj9w0rS8NKKhLM5Tbmkhnjl6bKKjpAoM3yN%2BAuUV7oe0AHnsnSnQ56l5A%3D%3D","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}","GCLOUD_PROJECT":"solutionsapp-55198","EVENTARC_CLOUD_EVENT_SOURCE":"projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"},"runtime":"nodejs18","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRegistry":"ARTIFACT_REGISTRY"},"versionId":"1","updateTime":"2023-06-02T19:59:28Z","buildId":"693c165c-3043-4058-af07-66c53347b2ed","buildName":"projects/140130769187/locations/us-central1/builds/693c165c-3043-4058-af07-66c53347b2ed"},"done":true,"error":{"code":3,"message":"Build failed: ...om lock file\nnpm ERR! Missing: fb-watchman@2.0.2 from lock file\nnpm ERR! Missing: fsevents@2.3.2 from lock file\nnpm ERR! Missing: walker@1.0.8 from lock file\nnpm ERR! Missing: normalize-path@3.0.0 from lock file\nnpm ERR! Missing: picomatch@2.3.1 from lock file\nnpm ERR! Missing: bser@2.1.1 from lock file\nnpm ERR! Missing: node-int64@0.4.0 from lock file\nnpm ERR! Missing: jest-diff@29.5.0 from lock file\nnpm ERR! Missing: diff-sequences@29.4.3 from lock file\nnpm ERR! Missing: @types/stack-utils@2.0.1 from lock file\nnpm ERR! Missing: jest-pnp-resolver@1.2.3 from lock file\nnpm ERR! Missing: resolve@1.22.2 from lock file\nnpm ERR! Missing: resolve.exports@2.0.2 from lock file\nnpm ERR! Missing: emittery@0.13.1 from lock file\nnpm ERR! Missing: jest-docblock@29.4.3 from lock file\nnpm ERR! Missing: jest-leak-detector@29.5.0 from lock file\nnpm ERR! Missing: p-limit@3.1.0 from lock file\nnpm ERR! Missing: source-map-support@0.5.13 from lock file\nnpm ERR! Missing: detect-newline@3.1.0 from lock file\nnpm ERR! Missing: @jest/globals@29.5.0 from lock file\nnpm ERR! Missing: @jest/source-map@29.4.3 from lock file\nnpm ERR! Missing: cjs-module-lexer@1.2.2 from lock file\nnpm ERR! Missing: strip-bom@4.0.0 from lock file\nnpm ERR! Missing: callsites@3.1.0 from lock file\nnpm ERR! Missing: @babel/plugin-syntax-jsx@7.21.4 from lock file\nnpm ERR! Missing: @babel/plugin-syntax-typescript@7.21.4 from lock file\nnpm ERR! Missing: @types/prettier@2.7.3 from lock file\nnpm ERR! Missing: natural-compare@1.4.0 from lock file\nnpm ERR! Missing: semver@7.5.1 from lock file\nnpm ERR! Missing: camelcase@6.3.0 from lock file\nnpm ERR! Missing: leven@3.1.0 from lock file\nnpm ERR! Missing: supports-color@8.1.1 from lock file\nnpm ERR! Missing: argparse@1.0.10 from lock file\nnpm ERR! Missing: ansi-styles@3.2.1 from lock file\nnpm ERR! Missing: escape-string-regexp@1.0.5 from lock file\nnpm ERR! Missing: has-flag@4.0.0 from lock file\nnpm ERR! Missing: has-flag@4.0.0 from lock file\nnpm ERR! Missing: sprintf-js@1.0.3 from lock file\nnpm ERR! \nnpm ERR! Clean install a project\nnpm ERR! \nnpm ERR! Usage:\nnpm ERR! npm ci\nnpm ERR! \nnpm ERR! Options:\nnpm ERR! [-S|--save|--no-save|--save-prod|--save-dev|--save-optional|--save-peer|--save-bundle]\nnpm ERR! [-E|--save-exact] [-g|--global]\nnpm ERR! [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]\nnpm ERR! [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]\nnpm ERR! [--strict-peer-deps] [--no-package-lock] [--foreground-scripts]\nnpm ERR! [--ignore-scripts] [--no-audit] [--no-bin-links] [--no-fund] [--dry-run]\nnpm ERR! [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]\nnpm ERR! [-ws|--workspaces] [--include-workspace-root] [--install-links]\nnpm ERR! \nnpm ERR! aliases: clean-install, ic, install-clean, isntall-clean\nnpm ERR! \nnpm ERR! Run \"npm help ci\" for more info\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /www-data-home/.npm/_logs/2023-06-02T19_59_20_480Z-debug-0.log; Error ID: beaf8772"}}
+[debug] [2023-06-02T19:59:36.235Z] Got source token undefined for region us-central1
+[error] Build failed: ...om lock file
+npm ERR! Missing: fb-watchman@2.0.2 from lock file
+npm ERR! Missing: fsevents@2.3.2 from lock file
+npm ERR! Missing: walker@1.0.8 from lock file
+npm ERR! Missing: normalize-path@3.0.0 from lock file
+npm ERR! Missing: picomatch@2.3.1 from lock file
+npm ERR! Missing: bser@2.1.1 from lock file
+npm ERR! Missing: node-int64@0.4.0 from lock file
+npm ERR! Missing: jest-diff@29.5.0 from lock file
+npm ERR! Missing: diff-sequences@29.4.3 from lock file
+npm ERR! Missing: @types/stack-utils@2.0.1 from lock file
+npm ERR! Missing: jest-pnp-resolver@1.2.3 from lock file
+npm ERR! Missing: resolve@1.22.2 from lock file
+npm ERR! Missing: resolve.exports@2.0.2 from lock file
+npm ERR! Missing: emittery@0.13.1 from lock file
+npm ERR! Missing: jest-docblock@29.4.3 from lock file
+npm ERR! Missing: jest-leak-detector@29.5.0 from lock file
+npm ERR! Missing: p-limit@3.1.0 from lock file
+npm ERR! Missing: source-map-support@0.5.13 from lock file
+npm ERR! Missing: detect-newline@3.1.0 from lock file
+npm ERR! Missing: @jest/globals@29.5.0 from lock file
+npm ERR! Missing: @jest/source-map@29.4.3 from lock file
+npm ERR! Missing: cjs-module-lexer@1.2.2 from lock file
+npm ERR! Missing: strip-bom@4.0.0 from lock file
+npm ERR! Missing: callsites@3.1.0 from lock file
+npm ERR! Missing: @babel/plugin-syntax-jsx@7.21.4 from lock file
+npm ERR! Missing: @babel/plugin-syntax-typescript@7.21.4 from lock file
+npm ERR! Missing: @types/prettier@2.7.3 from lock file
+npm ERR! Missing: natural-compare@1.4.0 from lock file
+npm ERR! Missing: semver@7.5.1 from lock file
+npm ERR! Missing: camelcase@6.3.0 from lock file
+npm ERR! Missing: leven@3.1.0 from lock file
+npm ERR! Missing: supports-color@8.1.1 from lock file
+npm ERR! Missing: argparse@1.0.10 from lock file
+npm ERR! Missing: ansi-styles@3.2.1 from lock file
+npm ERR! Missing: escape-string-regexp@1.0.5 from lock file
+npm ERR! Missing: has-flag@4.0.0 from lock file
+npm ERR! Missing: has-flag@4.0.0 from lock file
+npm ERR! Missing: sprintf-js@1.0.3 from lock file
+npm ERR! 
+npm ERR! Clean install a project
+npm ERR! 
+npm ERR! Usage:
+npm ERR! npm ci
+npm ERR! 
+npm ERR! Options:
+npm ERR! [-S|--save|--no-save|--save-prod|--save-dev|--save-optional|--save-peer|--save-bundle]
+npm ERR! [-E|--save-exact] [-g|--global]
+npm ERR! [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+npm ERR! [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+npm ERR! [--strict-peer-deps] [--no-package-lock] [--foreground-scripts]
+npm ERR! [--ignore-scripts] [--no-audit] [--no-bin-links] [--no-fund] [--dry-run]
+npm ERR! [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+npm ERR! [-ws|--workspaces] [--include-workspace-root] [--install-links]
+npm ERR! 
+npm ERR! aliases: clean-install, ic, install-clean, isntall-clean
+npm ERR! 
+npm ERR! Run "npm help ci" for more info
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /www-data-home/.npm/_logs/2023-06-02T19_59_20_480Z-debug-0.log; Error ID: beaf8772
+[debug] [2023-06-02T19:59:36.261Z] Total Function Deployment time: 37745
+[debug] [2023-06-02T19:59:36.262Z] 1 Functions Deployed
+[debug] [2023-06-02T19:59:36.262Z] 1 Functions Errored
+[debug] [2023-06-02T19:59:36.262Z] 0 Function Deployments Aborted
+[debug] [2023-06-02T19:59:36.262Z] Average Function Deployment time: 37744
+[info] 
+[info] Functions deploy had errors with the following functions:
+	sendNotification(us-central1)
+[info] i  functions: cleaning up build files... 
+[debug] [2023-06-02T19:59:36.339Z] >>> [apiv2][query] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/solutionsapp-55198/locations/us-central1/repositories/gcf-artifacts/packages/send_notification [none]
+[debug] [2023-06-02T19:59:36.341Z] >>> [apiv2][query] GET https://us.gcr.io/v2/solutionsapp-55198/gcf/us-central1/tags/list [none]
+[debug] [2023-06-02T19:59:36.566Z] <<< [apiv2][status] GET https://us.gcr.io/v2/solutionsapp-55198/gcf/us-central1/tags/list 200
+[debug] [2023-06-02T19:59:36.567Z] <<< [apiv2][body] GET https://us.gcr.io/v2/solutionsapp-55198/gcf/us-central1/tags/list {"child":[],"manifest":{},"name":"solutionsapp-55198/gcf/us-central1","tags":[]}
+[debug] [2023-06-02T19:59:36.567Z] Could not find image for function projects/solutionsapp-55198/locations/us-central1/functions/sendNotification
+[debug] [2023-06-02T19:59:36.672Z] <<< [apiv2][status] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/solutionsapp-55198/locations/us-central1/repositories/gcf-artifacts/packages/send_notification 404
+[debug] [2023-06-02T19:59:36.673Z] <<< [apiv2][body] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/solutionsapp-55198/locations/us-central1/repositories/gcf-artifacts/packages/send_notification {"error":{"code":404,"message":"Package \"projects/solutionsapp-55198/locations/us-central1/repositories/gcf-artifacts/packages/send_notification\" was not found.","status":"NOT_FOUND"}}
+[debug] [2023-06-02T19:59:36.673Z] Functions deploy failed.
+[debug] [2023-06-02T19:59:36.674Z] {
+  "endpoint": {
+    "id": "sendNotification",
+    "project": "solutionsapp-55198",
+    "region": "us-central1",
+    "entryPoint": "sendNotification",
+    "platform": "gcfv1",
+    "runtime": "nodejs18",
+    "eventTrigger": {
+      "eventType": "providers/cloud.firestore/eventTypes/document.create",
+      "retry": false,
+      "eventFilters": {
+        "resource": "projects/solutionsapp-55198/databases/(default)/documents/posts/{postId}"
+      }
+    },
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "serviceAccount": null,
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "vpc": null,
+    "environmentVariables": {
+      "FIREBASE_CONFIG": "{\"projectId\":\"solutionsapp-55198\",\"storageBucket\":\"solutionsapp-55198.appspot.com\"}",
+      "GCLOUD_PROJECT": "solutionsapp-55198",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/solutionsapp-55198/locations/us-central1/functions/sendNotification"
+    },
+    "codebase": "default",
+    "targetedByOnly": false,
+    "hash": "765ae56110edad53e24044aa650543a0320b65e8"
+  },
+  "op": "create",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "exit": 1,
+    "message": "Build failed: ...om lock file\nnpm ERR! Missing: fb-watchman@2.0.2 from lock file\nnpm ERR! Missing: fsevents@2.3.2 from lock file\nnpm ERR! Missing: walker@1.0.8 from lock file\nnpm ERR! Missing: normalize-path@3.0.0 from lock file\nnpm ERR! Missing: picomatch@2.3.1 from lock file\nnpm ERR! Missing: bser@2.1.1 from lock file\nnpm ERR! Missing: node-int64@0.4.0 from lock file\nnpm ERR! Missing: jest-diff@29.5.0 from lock file\nnpm ERR! Missing: diff-sequences@29.4.3 from lock file\nnpm ERR! Missing: @types/stack-utils@2.0.1 from lock file\nnpm ERR! Missing: jest-pnp-resolver@1.2.3 from lock file\nnpm ERR! Missing: resolve@1.22.2 from lock file\nnpm ERR! Missing: resolve.exports@2.0.2 from lock file\nnpm ERR! Missing: emittery@0.13.1 from lock file\nnpm ERR! Missing: jest-docblock@29.4.3 from lock file\nnpm ERR! Missing: jest-leak-detector@29.5.0 from lock file\nnpm ERR! Missing: p-limit@3.1.0 from lock file\nnpm ERR! Missing: source-map-support@0.5.13 from lock file\nnpm ERR! Missing: detect-newline@3.1.0 from lock file\nnpm ERR! Missing: @jest/globals@29.5.0 from lock file\nnpm ERR! Missing: @jest/source-map@29.4.3 from lock file\nnpm ERR! Missing: cjs-module-lexer@1.2.2 from lock file\nnpm ERR! Missing: strip-bom@4.0.0 from lock file\nnpm ERR! Missing: callsites@3.1.0 from lock file\nnpm ERR! Missing: @babel/plugin-syntax-jsx@7.21.4 from lock file\nnpm ERR! Missing: @babel/plugin-syntax-typescript@7.21.4 from lock file\nnpm ERR! Missing: @types/prettier@2.7.3 from lock file\nnpm ERR! Missing: natural-compare@1.4.0 from lock file\nnpm ERR! Missing: semver@7.5.1 from lock file\nnpm ERR! Missing: camelcase@6.3.0 from lock file\nnpm ERR! Missing: leven@3.1.0 from lock file\nnpm ERR! Missing: supports-color@8.1.1 from lock file\nnpm ERR! Missing: argparse@1.0.10 from lock file\nnpm ERR! Missing: ansi-styles@3.2.1 from lock file\nnpm ERR! Missing: escape-string-regexp@1.0.5 from lock file\nnpm ERR! Missing: has-flag@4.0.0 from lock file\nnpm ERR! Missing: has-flag@4.0.0 from lock file\nnpm ERR! Missing: sprintf-js@1.0.3 from lock file\nnpm ERR! \nnpm ERR! Clean install a project\nnpm ERR! \nnpm ERR! Usage:\nnpm ERR! npm ci\nnpm ERR! \nnpm ERR! Options:\nnpm ERR! [-S|--save|--no-save|--save-prod|--save-dev|--save-optional|--save-peer|--save-bundle]\nnpm ERR! [-E|--save-exact] [-g|--global]\nnpm ERR! [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]\nnpm ERR! [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]\nnpm ERR! [--strict-peer-deps] [--no-package-lock] [--foreground-scripts]\nnpm ERR! [--ignore-scripts] [--no-audit] [--no-bin-links] [--no-fund] [--dry-run]\nnpm ERR! [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]\nnpm ERR! [-ws|--workspaces] [--include-workspace-root] [--install-links]\nnpm ERR! \nnpm ERR! aliases: clean-install, ic, install-clean, isntall-clean\nnpm ERR! \nnpm ERR! Run \"npm help ci\" for more info\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /www-data-home/.npm/_logs/2023-06-02T19_59_20_480Z-debug-0.log; Error ID: beaf8772",
+    "status": 3
+  }
+}
+[debug] [2023-06-02T19:59:36.718Z] Error: Failed to create function sendNotification in region us-central1
+    at C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:49:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Fabricator.createV1Function (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:178:32)
+    at async Fabricator.createEndpoint (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:130:13)
+    at async handle (C:\Users\YJIAN\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:86:17)
+[error] 
+[error] Error: There was an error deploying functions
