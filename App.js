@@ -6,15 +6,40 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/Homescreen";
 import Signin from "./screens/Signin";
 import Addpost from "./screens/Addpost";
+import Splash from "./screens/Splash";
 import BottomNavigator from "./components/Bottomnavigator";
 import Feed from "./screens/Feed";
+import Splash1 from "./screens/Splash1";
+import Welcome from "./screens/Welcome";
+import * as Font from 'expo-font';
+import React, { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
+        'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+        // Add other font weights and styles as needed
+      });
+    }
+
+    loadFonts();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
+      <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="Signin"
           component={Signin}
@@ -37,6 +62,19 @@ export default function App() {
           component={Feed}
           options={{headerShown: false}}
         />
+
+        <Stack.Screen
+          name="Splash"
+          component={Splash}
+          options={{ headerShown: false }}
+        />
+        
+        <Stack.Screen
+          name="Splash1"
+          component={Splash1}
+          options={{ headerShown: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

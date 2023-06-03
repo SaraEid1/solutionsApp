@@ -12,11 +12,22 @@ import { collection, onSnapshot, addDoc } from "firebase/firestore";
 import { db, sendNotification } from "../firebase";
 import { Timestamp } from "firebase/firestore";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import tw from "tailwind-react-native-classnames";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { KeyboardAvoidingView } from "react-native";
+import tw from 'tailwind-react-native-classnames';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { KeyboardAvoidingView } from 'react-native';
+import {bundleResourceIO} from "@tensorflow/tfjs-react-native";
+
+import * as tf from '@tensorflow/tfjs';
+import '@tensorflow/tfjs-react-native';
+import { fetch } from '@tensorflow/tfjs-react-native';
+import { Camera } from 'expo-camera';
+const { Tokenizr } = require("tokenizr");
+
+const nlp = require("spacy-js");
 
 export default function Addpost() {
+
+
   const [posts, setPosts] = useState([]);
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
@@ -93,6 +104,59 @@ export default function Addpost() {
         console.error("Error adding post: ", error);
       });
   }
+
+  const modelJSON = require("../emergency_model_tfjs/model.json");
+  const modelWeights = require("../emergency_model_tfjs/group1-shard1of1.bin");
+  /*
+  useEffect(() => {
+
+      const loadModel = async () => {
+        const model = await tf
+          .loadLayersModel(bundleResourceIO(modelJSON, modelWeights))
+          .catch(e => console.log(e));
+        console.log("Model loaded!");
+       // return model;
+      
+
+      
+  
+       const texts = [
+        "Help! There's an urgent situation on campus!",
+        "I need immediate assistance! Please respond quickly!",
+        "I'm in trouble and need help as soon as possible.",
+        "This is urgent! We require immediate support!",
+        "I need support",
+        "my professor is sexist",
+        "I feel really bad after what happened yesterday"
+      ];
+
+      
+      
+      const paddedSequences = padSequences(sequences, maxlen);
+     // const paddedSequences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 22, 9, 78];
+      console.log(paddedSequences);
+        const predictions = model.predict(paddedSequences);
+        console.log(predictions);
+
+        const results = [];
+  
+        predictions.array().then((array) => {
+          texts.forEach((text, index) => {
+            const prediction = array[index][0];
+            results.push({ text, prediction });
+          });
+  
+          console.log(results);
+        });
+  
+        model.dispose();
+
+    };
+  
+    loadModel();
+  }, []);
+  
+*/
 
   return (
     <SafeAreaProvider>
