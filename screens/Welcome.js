@@ -18,6 +18,8 @@ export default function Welcome({ navigation }) {
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Welcome To</Text>
       <Text style={styles.emphasizedText}>EmpowerHer</Text>
+      <Text style={styles.slogan}>Amplifying Voices for Campus Safety</Text>
+      
       <Image
         source={welcome}
         style={styles.image}
@@ -43,13 +45,19 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     color: "#000000",
-    marginBottom: 10,
     marginTop: 5,
   },
   emphasizedText: {
     color: "#FF7D5C",
     fontWeight: "bold",
     fontSize: 40,
-    marginTop: 5,
+  },
+  slogan: {
+    fontSize: 20,
+    color: "#000000",
+    marginBottom: 10,
+    fontWeight: "regular",
+    marginTop: 10,
+    fontFamily: 'Roboto',
   },
 });
