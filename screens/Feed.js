@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F0F0",
     borderRadius: 10,
     padding: 10,
+    marginBottom: 15,
   },
   searchInputText: {
     fontSize: 16,
@@ -184,6 +185,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 10,
+    marginBottom: 15,
   },
   newPostButtonText: {
     color: "#FFF",

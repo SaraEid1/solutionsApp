@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import HomeScreen from "../screens/Homescreen";
 import Feed from "../screens/Feed";
@@ -50,6 +50,43 @@ const BottomNavigator = () => {
     },
   });
 
+  const headerOptions = ({ route }) => ({
+    headerTitle: () => {
+      let headerTitle;
+
+      switch (route.name) {
+        case 'HomeScreen':
+          headerTitle = 'Home';
+          break;
+        case 'Community Posts':
+          headerTitle = 'Community Posts';
+          break;
+        case 'New Post':
+          headerTitle = 'New Post';
+          break;
+        case 'Map':
+          headerTitle = 'Map';
+          break;
+        case 'Resources':
+          headerTitle = 'Resources';
+          break;
+        default:
+          headerTitle = '';
+          break;
+      }
+
+      return (
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>{headerTitle}</Text>
+        </View>
+      );
+    },
+    headerStyle: styles.headerStyle,
+    headerTintColor: '#FFFFFF',
+    headerTitleAlign: 'center',
+    headerTitleStyle: styles.headerTitleStyle,
+  });
+
   return (
     <SafeAreaProvider style={styles.container}>
       <Tab.Navigator
@@ -65,40 +102,30 @@ const BottomNavigator = () => {
         <Tab.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
+          options={headerOptions}
         />
         <Tab.Screen
           name="Community Posts"
           component={Feed}
-          options={{
-            headerShown: false,
-          }}
+          options={headerOptions}
         />
 
         <Tab.Screen
           name="New Post"
           component={Addpost}
-          options={{
-            headerShown: false,
-          }}
+          options={headerOptions}
         />
 
         <Tab.Screen
           name="Map"
           component={CustomMarker}
-          options={{
-            headerShown: false,
-          }}
+          options={headerOptions}
         />
 
         <Tab.Screen
           name="Resources"
           component={Resources}
-          options={{
-            headerShown: false,
-          }}
+          options={headerOptions}
         />
       </Tab.Navigator>
     </SafeAreaProvider>
@@ -117,6 +144,24 @@ const styles = StyleSheet.create({
   },
   tabIcon: {
     marginBottom: -5, // Adjust as needed
+  },
+  headerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  headerStyle: {
+    backgroundColor: '#FF5050',
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  headerTitleStyle: {
+    fontWeight: 'bold',
   },
 });
 

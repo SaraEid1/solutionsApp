@@ -83,7 +83,7 @@ export default function Addpost() {
 
   const modelJSON = require("../emergency_model_tfjs/model.json");
   const modelWeights = require("../emergency_model_tfjs/group1-shard1of1.bin");
-  
+  /*
   useEffect(() => {
 
       const loadModel = async () => {
@@ -132,7 +132,7 @@ export default function Addpost() {
     loadModel();
   }, []);
   
-
+*/
 
   return (
     <SafeAreaProvider>

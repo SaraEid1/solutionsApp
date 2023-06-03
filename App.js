@@ -10,6 +10,7 @@ import Splash from "./screens/Splash";
 import BottomNavigator from "./components/Bottomnavigator";
 import Feed from "./screens/Feed";
 import Splash1 from "./screens/Splash1";
+import Welcome from "./screens/Welcome";
 import * as Font from 'expo-font';
 import React, { useEffect } from "react";
 
@@ -32,6 +33,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
+      <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="Signin"
           component={Signin}
