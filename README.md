@@ -3,12 +3,14 @@
 ## How to run the app:
 
 Install the dependencies after cloning the repo:
-```ruby
-npm install
-```
-Or
+
 ```ruby
 yarn
+```
+OR
+
+```ruby
+npm install
 ```
 
 Connect an android device (emulator or physical device) and run the server:
