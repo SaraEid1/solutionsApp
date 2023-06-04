@@ -13,7 +13,7 @@ OR
 npm install
 ```
 
-Connect an android device (emulator or physical device) and run the server:
+Connect an android or ios device (emulator or physical device) and run the server:
 ```ruby
 expo start --tunnel
 ```
